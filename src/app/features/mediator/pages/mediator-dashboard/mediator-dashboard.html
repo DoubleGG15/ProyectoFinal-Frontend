@@ -1,0 +1,36 @@
+<div class="container mt-4">
+  <div class="bg-dark text-white p-4 rounded mb-4 shadow-sm">
+    <h1>Panel del Mediador</h1>
+    <p class="lead mb-0">Bienvenido de vuelta, Kenneth. Gestiona tus audiencias y resoluciones.</p>
+  </div>
+
+  <div class="row text-center mb-4">
+    <div class="col-md-4 mb-3">
+      <div class="card border-primary shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title text-primary">Casos Activos</h5>
+          <h2 class="display-4 font-weight-bold">{{ metricas.casosAsignados }}</h2>
+          <a routerLink="/mediador/casos" class="btn btn-outline-primary btn-sm mt-2">Ver mis casos</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card border-warning shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title text-warning">Sesiones Agendadas</h5>
+          <h2 class="display-4 font-weight-bold">{{ metricas.sesionesHoy }}</h2>
+          <p class="text-muted small mb-0 mt-3">Audiencias asignadas en agenda</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card border-success shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title text-success">Acuerdos Históricos</h5>
+          <h2 class="display-4 font-weight-bold">{{ metricas.acuerdosLogrados }}</h2>
+          <span class="badge bg-success">Tasa alta de éxito</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
