@@ -1,0 +1,10 @@
+<div class="dashboard-container">
+  <h1>Panel de Administrador</h1>
+
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <div *ngIf="dashboard">
+    <p>Total usuarios: {{ dashboard.TotalUsuarios }}</p>
+    <p>Total casos: {{ dashboard.TotalCasos }}</p>
+  </div>
+</div>
