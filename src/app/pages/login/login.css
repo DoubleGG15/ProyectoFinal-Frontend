@@ -1,0 +1,30 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 100vh toda la altura de la pantalla*/
+}
+
+/* Darle un ancho fijo */
+mat-card {
+  width: 400px;
+  padding: 20px;
+}
+
+/* Inputs tomen el espacio disponible */
+mat-form-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* El mensaje de error en rojo, de peligro  */
+.error {
+  color: red;
+  font-size: 14px;
+}
+
+mat-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

@@ -1,0 +1,56 @@
+<!--
+mat-card es un contenedor con un sombreado, tiene bordes redondeados
+y esto viene de Angular Material.
+
+El formulario que diseñen vivem dentro de esta tarjeta como estructura
+visual.
+-->
+
+<div class="login-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title> Iniciar Sesion </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!--
+      mat-form-field es un contenedor de un input
+      appearance = outline
+      Correo
+      -->
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+
+       <!--
+       [(ngModel)]
+       Label: |            |
+        -->
+        <input matInput type="email" [(ngModel)]="email" placeholder="juan@test.com"/>
+      </mat-form-field>
+
+      <!--
+      mat-form-field es un contenedor de un input
+      appearance = outline
+      Contraseña
+      -->
+      <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+
+        <!--
+        [(ngModel)]
+        Label: |            |
+         -->
+        <input matInput type="password" [(ngModel)]="password" placeholder="********"/>
+      </mat-form-field>
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="onLogin()" [disabled]="isLoading">
+        {{ isLoading ? 'Entrando...' : 'Iniciar Sesion...' }}
+      </button>
+
+      <a routerLink="/register">¿No tienes cuenta? Registrate</a>
+    </mat-card-actions>
+    </mat-card>
+</div>
