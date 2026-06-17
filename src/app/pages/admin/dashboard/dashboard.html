@@ -3,8 +3,6 @@
 
   <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
 
-  <div *ngIf="dashboard">
-    <p>Total usuarios: {{ dashboard.TotalUsuarios }}</p>
-    <p>Total casos: {{ dashboard.TotalCasos }}</p>
-  </div>
+  <p>Total usuarios: {{ totalUsuarios }}</p>
+  <p>Total casos: {{ totalCasos }}</p>
 </div>
