@@ -1,1 +1,27 @@
-<p>session-form works!</p>
+<div class="card p-4 bg-light">
+  <h4 class="mb-3 text-secondary"> Agendar Nueva Sesión de Mediación</h4>
+  <form (ngSubmit)="guardarSesion()">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label font-weight-bold">Fecha</label>
+        <input type="date" class="form-control" [(ngModel)]="sesion.fecha" name="fecha" required />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label font-weight-bold">Hora</label>
+        <input type="time" class="form-control" [(ngModel)]="sesion.hora" name="hora" required />
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label font-weight-bold">Enlace de la Reunión (Teams/Zoom)</label>
+      <input type="url" class="form-control" placeholder="https://..." [(ngModel)]="sesion.linkReunion" name="linkReunion" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label font-weight-bold">Notas o Agenda Previas</label>
+      <textarea class="form-control" rows="3" placeholder="Puntos clave a tratar..." [(ngModel)]="sesion.notas" name="notas"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success px-4">Confirmar y Agendar</button>
+  </form>
+</div>

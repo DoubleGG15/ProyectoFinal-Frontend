@@ -1,1 +1,37 @@
-<p>assigned-cases works!</p>
+<div class="container mt-4">
+  <h2>Casos Asignados para Mediación</h2>
+  <p>Selecciona un caso para ver sus detalles, agendar sesiones o registrar acuerdos.</p>
+
+  <div class="table-responsive" *ngIf="casos.length > 0; else noCasos">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>ID Caso</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let caso of casos">
+          <td>{{ caso.id }}</td>
+          <td>{{ caso.descripcion }}</td>
+          <td>
+            <span class="badge bg-warning text-dark">{{ caso.estado }}</span>
+          </td>
+          <td>
+            <button class="btn btn-primary btn-sm">
+              Ver Detalle
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noCasos>
+    <div class="alert alert-info" role="alert">
+      No tienes casos asignados en este momento.
+    </div>
+  </ng-template>
+  
