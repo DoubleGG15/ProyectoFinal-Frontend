@@ -54,4 +54,9 @@ export class AdminService {
       headers: this.getHeaders()
     });
   }
+  desactivarMediador(userId: string): Observable<any> {
+  return this.http.post(`${this.apiUrl}/desactivar-mediador/${userId}`, {}, {
+    headers: this.getHeaders()
+  });
+}
 }
