@@ -7,12 +7,13 @@ import { AuthService } from '../../../services/auth.service';
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class AdminDashboardComponent implements OnInit {
-  dashboard: any = null;
+  totalUsuarios: number = 0;
+  totalCasos: number = 0;
   errorMessage: string = '';
   userEmail: string | null = '';
 

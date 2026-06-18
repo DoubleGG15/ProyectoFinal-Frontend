@@ -1,0 +1,43 @@
+<h1>Mediadores</h1>
+
+<p *ngIf="errorMessage">{{ errorMessage }}</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Zona</th>
+      <th>Estado</th>
+      <th>Acción</th>
+      <th>Asignar Zona</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let mediador of mediadores">
+      <td>{{ mediador.FullName }}</td>
+      <td>{{ mediador.Email }}</td>
+      <td>{{ mediador.ZoneId }}</td>
+      <td>{{ mediador.IsActive ? 'Activo' : 'Inactivo' }}</td>
+
+      <td>
+        <button (click)="desactivarMediador(mediador.Id)">
+          Desactivar
+        </button>
+      </td>
+
+      <td>
+        <input
+          type="text"
+          [(ngModel)]="zonas[mediador.Id]"
+          placeholder="Ej: Zona Norte"
+        />
+
+        <button (click)="asignarZona(mediador.Id)">
+          Asignar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
