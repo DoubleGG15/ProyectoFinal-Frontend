@@ -1,1 +1,362 @@
-/* You can add global styles to this file, and also import other style files */
+/* Import Angular Material Core Styles if needed, or define custom theme styles */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+:root {
+  --bg-color: #2D4C3F;
+  --text-primary: #FFFFFF;
+  --text-secondary: #D9E2EC;
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-border: rgba(255, 255, 255, 0.15);
+  --accent-gold: #F2C14E;
+  --accent-gold-hover: #E0B03C;
+  --input-bg: #FCF6E8;
+  --input-text: #2D4C3F;
+  --error-color: #FF6B6B;
+  --success-color: #51CF66;
+  --font-title: 'Outfit', 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-body);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* Base Layout with Floating Decorative Circles */
+.app-layout {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: var(--bg-color);
+}
+
+.bg-shapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.shape-circle-1 {
+  position: absolute;
+  width: 50vw;
+  height: 50vw;
+  max-width: 450px;
+  max-height: 450px;
+  border-radius: 50%;
+  background-color: var(--accent-gold);
+  top: -150px;
+  left: 10%;
+  opacity: 0.85;
+  filter: blur(1px);
+}
+
+.shape-circle-2 {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  max-width: 500px;
+  max-height: 500px;
+  border-radius: 50%;
+  background-color: var(--accent-gold);
+  bottom: -180px;
+  right: 5%;
+  opacity: 0.85;
+  filter: blur(1px);
+}
+
+/* Glassmorphic Container */
+.glass-container {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 850px;
+  min-height: 480px;
+  background: rgba(254, 252, 245, 0.75);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+}
+
+/* Forms & UI Elements inside glass-container */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-color);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.auth-card h2 {
+  font-family: var(--font-title);
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.form-input {
+  width: 100%;
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-family: var(--font-body);
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.form-input:focus {
+  box-shadow: 0 0 0 2px var(--accent-gold);
+}
+
+.btn-primary {
+  width: 100%;
+  background-color: var(--accent-gold);
+  color: var(--input-text);
+  font-family: var(--font-title);
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 10px;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--accent-gold-hover);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-text {
+  color: var(--error-color);
+  font-size: 13px;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.success-text {
+  color: var(--success-color);
+  font-size: 13px;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.auth-link {
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 10px;
+  transition: color 0.2s;
+  display: inline-block;
+  align-self: center;
+}
+
+.auth-link:hover {
+  color: var(--accent-gold);
+  text-decoration: underline;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-header {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--card-border);
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.dashboard-title-wrapper h1 {
+  font-family: var(--font-title);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-info {
+  text-align: right;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.user-role {
+  font-size: 12px;
+  color: var(--accent-gold);
+}
+
+.btn-logout {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-gold);
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 32px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.welcome-section {
+  margin-bottom: 12px;
+}
+
+.welcome-section h2 {
+  font-family: var(--font-title);
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.welcome-section p {
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+/* Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.card-stat {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  border-color: rgba(255,255,255,0.25);
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-family: var(--font-title);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.stat-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.card-link {
+  color: var(--accent-gold);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-block;
+  margin-top: 8px;
+  transition: opacity 0.2s;
+}
+
+.card-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}

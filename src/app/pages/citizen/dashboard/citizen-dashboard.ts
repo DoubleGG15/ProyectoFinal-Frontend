@@ -1,23 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../../../services/auth.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
-  selector: 'app-mediator-dashboard',
+  selector: 'app-citizen-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './mediator-dashboard.html',
-  styleUrls: ['./mediator-dashboard.css']
+  imports: [CommonModule],
+  templateUrl: './citizen-dashboard.html',
+  styleUrls: ['./citizen-dashboard.css']
 })
-export class MediatorDashboard implements OnInit {
+export class CitizenDashboardComponent implements OnInit {
   userEmail: string | null = '';
-
-  metricas = {
-    casosAsignados: 5,
-    sesionesHoy: 2,
-    acuerdosLogrados: 14
-  };
+  userId: string | null = '';
 
   constructor(
     private authService: AuthService,
@@ -26,6 +21,7 @@ export class MediatorDashboard implements OnInit {
 
   ngOnInit(): void {
     this.userEmail = this.authService.getUserEmail();
+    this.userId = this.authService.getUserId();
   }
 
   onLogout(): void {

@@ -1,0 +1,47 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <div class="dashboard-title-wrapper">
+      <h1>Vecindario Tranquilo</h1>
+    </div>
+    <div class="user-badge">
+      <div class="user-info">
+        <p class="user-name">{{ userEmail }}</p>
+        <p class="user-role">Ciudadano</p>
+      </div>
+      <button class="btn-logout" (click)="onLogout()">Cerrar Sesión</button>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="welcome-section">
+      <h2>Panel del Ciudadano</h2>
+      <p>Bienvenido. Aquí puedes reportar disputas vecinales, revisar tus casos y firmar acuerdos de mediación.</p>
+    </section>
+
+    <div class="dashboard-grid">
+      <!-- Stat 1 -->
+      <div class="card-stat">
+        <p class="stat-label">Casos Activos</p>
+        <p class="stat-value">1</p>
+        <p class="stat-desc">Disputa en proceso de mediación</p>
+        <a class="card-link" href="#">Ver mis casos</a>
+      </div>
+
+      <!-- Stat 2 -->
+      <div class="card-stat">
+        <p class="stat-label">Convenios Firmados</p>
+        <p class="stat-value">0</p>
+        <p class="stat-desc">Sin convenios históricos registrados</p>
+        <a class="card-link" href="#">Revisar acuerdos</a>
+      </div>
+
+      <!-- Stat 3 -->
+      <div class="card-stat">
+        <p class="stat-label">Reportar Conflicto</p>
+        <p class="stat-value">+</p>
+        <p class="stat-desc">Reportar un nuevo problema de convivencia</p>
+        <a class="card-link" href="#">Crear reporte</a>
+      </div>
+    </div>
+  </main>
+</div>
