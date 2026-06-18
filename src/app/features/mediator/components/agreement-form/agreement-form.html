@@ -1,0 +1,25 @@
+<div class="card p-4 bg-light">
+  <h4 class="mb-3 text-secondary">✍ Registrar Resolución y Acuerdo</h4>
+  <form (ngSubmit)="guardarAcuerdo()">
+    <div class="mb-3">
+      <label class="form-label font-weight-bold">Tipo de Resolución</label>
+      <select class="form-select" [(ngModel)]="acuerdo.tipoAcuerdo" name="tipoAcuerdo">
+        <option value="Total">Acuerdo Total (Cierre del caso)</option>
+        <option value="Parcial">Acuerdo Parcial</option>
+        <option value="No Hubo Acuerdo">Sin Acuerdo (Cierre por falta de consenso)</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label font-weight-bold">Descripción del Acuerdo</label>
+      <textarea class="form-control" rows="3" placeholder="Resume el consenso..." [(ngModel)]="acuerdo.descripcion" name="descripcion" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label font-weight-bold">Compromisos de las Partes</label>
+      <textarea class="form-control" rows="3" placeholder="1. El solicitante hará...&#10;2. El invitado cumplirá con..." [(ngModel)]="acuerdo.compromisos" name="compromisos"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary px-4">Guardar Acta de Acuerdo</button>
+  </form>
+</div>
