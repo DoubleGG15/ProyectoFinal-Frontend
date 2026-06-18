@@ -1,17 +1,19 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../../services/admin.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mediadores',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './mediadores.html',
   styleUrl: './mediadores.css'
 })
 export class MediadoresComponent implements OnInit {
   mediadores: any[] = [];
   errorMessage: string = '';
+zonas: { [key: string]: string } = {};
 
   constructor(
     private adminService: AdminService,
@@ -49,4 +51,25 @@ export class MediadoresComponent implements OnInit {
       }
     });
   }
+asignarZona(userId: string): void {
+  const zoneId = this.zonas[userId];
+
+  if (!zoneId || zoneId.trim() === '') {
+    this.errorMessage = 'Debe escribir una zona.';
+    return;
+  }
+
+  this.adminService.asignarZona(userId, zoneId).subscribe({
+    next: () => {
+      this.zonas[userId] = '';
+      this.cargarMediadores();
+    },
+    error: (err: any) => {
+      console.log(err);
+      this.errorMessage = 'Error al asignar zona';
+      this.cd.detectChanges();
+    }
+  });
+}
+
 }
