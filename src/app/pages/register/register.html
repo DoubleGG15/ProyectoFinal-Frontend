@@ -1,46 +1,88 @@
-<div class="register-container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Crear Cuenta</mat-card-title>
-    </mat-card-header>
+<div class="app-layout">
+  <div class="bg-shapes">
+    <div class="shape-circle-1"></div>
+    <div class="shape-circle-2"></div>
+  </div>
 
-    <mat-card-content>
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre completo</mat-label>
-        <input matInput type="text" [(ngModel)]="fullName" placeholder="Tu nombre" />
-      </mat-form-field>
+  <div class="glass-container">
+    <div class="auth-card">
+      <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="15" r="8" fill="#F2C14E"/>
+          <circle cx="20" cy="25" r="8" fill="#F2C14E" fill-opacity="0.7"/>
+        </svg>
+      </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" [(ngModel)]="email" placeholder="tu@email.com" />
-      </mat-form-field>
+      <h2>Crear Cuenta</h2>
 
-        <mat-form-field appearance="outline">
-  <mat-label>Dirección</mat-label>
-  <input
-    matInput
-    type="text"
-    [(ngModel)]="address"
-    placeholder="Tu dirección"
-  />
-</mat-form-field>
+      <div class="form-group">
+        <label for="fullName">Nombre Completo</label>
+        <input 
+          id="fullName"
+          type="text" 
+          [(ngModel)]="fullName" 
+          class="form-input" 
+          placeholder="Tu nombre completo"
+          required
+        />
+      </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Contraseña</mat-label>
-        <input matInput type="password" [(ngModel)]="password" placeholder="••••••" />
-      </mat-form-field>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          id="email"
+          type="email" 
+          [(ngModel)]="email" 
+          class="form-input" 
+          placeholder="tu@email.com"
+          required
+        />
+      </div>
 
-      <!-- Mostramos error O éxito, según lo que haya pasado -->
-      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-      <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
-    </mat-card-content>
+      <div class="form-group">
+        <label for="address">Dirección</label>
+        <input 
+          id="address"
+          type="text" 
+          [(ngModel)]="address" 
+          class="form-input" 
+          placeholder="Tu dirección de residencia"
+          required
+        />
+      </div>
 
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onRegister()" [disabled]="isLoading">
-        {{ isLoading ? 'Creando...' : 'Registrarse' }}
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input 
+          id="password"
+          type="password" 
+          [(ngModel)]="password" 
+          class="form-input" 
+          placeholder="••••••••"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="role">Rol</label>
+        <select id="role" [(ngModel)]="role" class="form-input" style="background-color: var(--input-bg); color: var(--input-text);">
+          <option value="Ciudadano">Ciudadano</option>
+          <option value="Mediador">Mediador</option>
+        </select>
+      </div>
+
+      @if (errorMessage) {
+        <p class="error-text">{{ errorMessage }}</p>
+      }
+      @if (successMessage) {
+        <p class="success-text">{{ successMessage }}</p>
+      }
+
+      <button class="btn-primary" (click)="onRegister()" [disabled]="isLoading">
+        {{ isLoading ? 'Creando cuenta...' : 'Registrarse' }}
       </button>
 
-      <a routerLink="/login">¿Ya tienes cuenta? Inicia sesión</a>
-    </mat-card-actions>
-  </mat-card>
+      <a routerLink="/login" class="auth-link">¿Ya tienes cuenta? Inicia sesión</a>
+    </div>
+  </div>
 </div>

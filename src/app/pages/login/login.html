@@ -1,56 +1,53 @@
-<!--
-mat-card es un contenedor con un sombreado, tiene bordes redondeados
-y esto viene de Angular Material.
+<div class="app-layout">
+  <div class="bg-shapes">
+    <div class="shape-circle-1"></div>
+    <div class="shape-circle-2"></div>
+  </div>
 
-El formulario que diseñen vivem dentro de esta tarjeta como estructura
-visual.
--->
+  <div class="glass-container">
+    <div class="auth-card">
+      <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="15" r="8" fill="#F2C14E"/>
+          <circle cx="20" cy="25" r="8" fill="#F2C14E" fill-opacity="0.7"/>
+        </svg>
+      </div>
 
-<div class="login-container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title> Iniciar Sesion </mat-card-title>
-    </mat-card-header>
+      <h2>Iniciar Sesión</h2>
 
-    <mat-card-content>
-      <!--
-      mat-form-field es un contenedor de un input
-      appearance = outline
-      Correo
-      -->
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          id="email"
+          type="email" 
+          [(ngModel)]="email" 
+          class="form-input" 
+          placeholder="juan@test.com"
+          required
+        />
+      </div>
 
-       <!--
-       [(ngModel)]
-       Label: |            |
-        -->
-        <input matInput type="email" [(ngModel)]="email" placeholder="juan@test.com"/>
-      </mat-form-field>
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input 
+          id="password"
+          type="password" 
+          [(ngModel)]="password" 
+          class="form-input" 
+          placeholder="••••••••"
+          required
+        />
+      </div>
 
-      <!--
-      mat-form-field es un contenedor de un input
-      appearance = outline
-      Contraseña
-      -->
-      <mat-form-field appearance="outline">
-        <mat-label>Contraseña</mat-label>
+      @if (errorMessage) {
+        <p class="error-text">{{ errorMessage }}</p>
+      }
 
-        <!--
-        [(ngModel)]
-        Label: |            |
-         -->
-        <input matInput type="password" [(ngModel)]="password" placeholder="********"/>
-      </mat-form-field>
-      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-      </mat-card-content>
-
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onLogin()" [disabled]="isLoading">
-        {{ isLoading ? 'Entrando...' : 'Iniciar Sesion...' }}
+      <button class="btn-primary" (click)="onLogin()" [disabled]="isLoading">
+        {{ isLoading ? 'Entrando...' : 'Entrar' }}
       </button>
 
-      <a routerLink="/register">¿No tienes cuenta? Registrate</a>
-    </mat-card-actions>
-    </mat-card>
+      <a routerLink="/register" class="auth-link">¿No tienes cuenta? Regístrate</a>
+    </div>
+  </div>
 </div>

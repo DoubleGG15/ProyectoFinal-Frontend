@@ -63,4 +63,49 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('token');
   }
+
+  // Decodificar el token JWT manualmente para obtener sus claims
+  decodeToken(token: string): any {
+    try {
+      const parts = token.split('.');
+      if (parts.length !== 3) return null;
+      // Reemplazar caracteres base64url por base64
+      const payload = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+      const decoded = atob(payload);
+      return JSON.parse(decoded);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Obtener el rol del token activo
+  getUserRole(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    const decoded = this.decodeToken(token);
+    if (!decoded) return null;
+    // ASP.NET Core mapea ClaimTypes.Role a esta URL en JWT
+    const roleClaim = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+    return decoded[roleClaim] || decoded['role'] || decoded['Role'] || null;
+  }
+
+  // Obtener el email del token activo
+  getUserEmail(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    const decoded = this.decodeToken(token);
+    if (!decoded) return null;
+    const emailClaim = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress';
+    return decoded[emailClaim] || decoded['email'] || decoded['Email'] || null;
+  }
+
+  // Obtener el ID de usuario del token activo
+  getUserId(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    const decoded = this.decodeToken(token);
+    if (!decoded) return null;
+    const idClaim = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier';
+    return decoded[idClaim] || decoded['nameid'] || decoded['Id'] || null;
+  }
 }

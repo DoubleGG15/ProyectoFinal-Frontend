@@ -1,36 +1,47 @@
-<div class="container mt-4">
-  <div class="bg-dark text-white p-4 rounded mb-4 shadow-sm">
-    <h1>Panel del Mediador</h1>
-    <p class="lead mb-0">Bienvenido de vuelta, Kenneth. Gestiona tus audiencias y resoluciones.</p>
-  </div>
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <div class="dashboard-title-wrapper">
+      <h1>Vecindario Tranquilo</h1>
+    </div>
+    <div class="user-badge">
+      <div class="user-info">
+        <p class="user-name">{{ userEmail }}</p>
+        <p class="user-role">Mediador</p>
+      </div>
+      <button class="btn-logout" (click)="onLogout()">Cerrar Sesión</button>
+    </div>
+  </header>
 
-  <div class="row text-center mb-4">
-    <div class="col-md-4 mb-3">
-      <div class="card border-primary shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title text-primary">Casos Activos</h5>
-          <h2 class="display-4 font-weight-bold">{{ metricas.casosAsignados }}</h2>
-          <a routerLink="/mediador/casos" class="btn btn-outline-primary btn-sm mt-2">Ver mis casos</a>
-        </div>
+  <main class="dashboard-main">
+    <section class="welcome-section">
+      <h2>Panel del Mediador</h2>
+      <p>Bienvenido. Gestione sus audiencias de conciliación, supervise sus expedientes digitales y redacte actas de acuerdos.</p>
+    </section>
+
+    <div class="dashboard-grid">
+      <!-- Card 1 -->
+      <div class="card-stat">
+        <p class="stat-label">Casos Activos</p>
+        <p class="stat-value">{{ metricas.casosAsignados }}</p>
+        <p class="stat-desc">Casos bajo su tutela asignados para mediación</p>
+        <a routerLink="/mediador/casos" class="card-link">Ver mis casos</a>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card-stat">
+        <p class="stat-label">Sesiones Agendadas</p>
+        <p class="stat-value">{{ metricas.sesionesHoy }}</p>
+        <p class="stat-desc">Audiencias planificadas en su agenda de hoy</p>
+        <a href="#" class="card-link">Programar audiencia</a>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card-stat">
+        <p class="stat-label">Acuerdos Históricos</p>
+        <p class="stat-value">{{ metricas.acuerdosLogrados }}</p>
+        <p class="stat-desc">Acuerdos de conciliación formalizados exitosamente</p>
+        <a href="#" class="card-link">Ver resoluciones</a>
       </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <div class="card border-warning shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title text-warning">Sesiones Agendadas</h5>
-          <h2 class="display-4 font-weight-bold">{{ metricas.sesionesHoy }}</h2>
-          <p class="text-muted small mb-0 mt-3">Audiencias asignadas en agenda</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <div class="card border-success shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title text-success">Acuerdos Históricos</h5>
-          <h2 class="display-4 font-weight-bold">{{ metricas.acuerdosLogrados }}</h2>
-          <span class="badge bg-success">Tasa alta de éxito</span>
-        </div>
-      </div>
-    </div>
-  </div>
+  </main>
 </div>

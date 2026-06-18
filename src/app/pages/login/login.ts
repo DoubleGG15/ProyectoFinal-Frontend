@@ -1,13 +1,7 @@
-// Un componente => a una pantalla
-// 3 partes, ts => logica, html => estructura visual y css => a los estilos
-
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { AuthService } from '../../services/auth.service';
 import { LoginResponse } from '../../models/user.model';
 
@@ -17,9 +11,6 @@ import { LoginResponse } from '../../models/user.model';
   imports: [
     CommonModule,
     FormsModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
     RouterLink,
   ],
   templateUrl: './login.html',
@@ -48,16 +39,22 @@ export class LoginComponent {
         this.authService.saveToken(response.token);
         this.isLoading = false;
 
-        // Temporal: solo para comprobar que sí entra al login
-       this.router.navigate(['/admin/dashboard']);
+        const role = this.authService.getUserRole()?.toLowerCase();
+        console.log('User role decoded:', role);
+        
+        if (role === 'administrador' || role === 'admin') {
+          this.router.navigate(['/admin/dashboard']);
+        } else if (role === 'mediador') {
+          this.router.navigate(['/mediador/dashboard']);
+        } else {
+          this.router.navigate(['/ciudadano/dashboard']);
+        }
       },
 
       error: (err: any) => {
         console.log('ERROR LOGIN:', err);
-
         this.errorMessage =
           err.error?.message || 'Credenciales inválidas. Intenta de nuevo.';
-
         this.isLoading = false;
       },
     });
