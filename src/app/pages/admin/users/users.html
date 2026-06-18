@@ -1,0 +1,31 @@
+<div>
+  <h1>Usuarios</h1>
+
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Estado</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <td>{{ usuario.FullName || 'Sin nombre' }}</td>
+        <td>{{ usuario.Email || 'Sin email' }}</td>
+        <td>{{ usuario.Role || 'Sin rol' }}</td>
+        <td>{{ usuario.IsActive ? 'Activo' : 'Inactivo' }}</td>
+        <td>
+          <button (click)="alternarEstado(usuario.Id)">
+            {{ usuario.IsActive ? 'Suspender' : 'Activar' }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
