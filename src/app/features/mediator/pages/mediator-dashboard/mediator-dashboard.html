@@ -1,47 +1,121 @@
-<div class="dashboard-container">
-  <header class="dashboard-header">
-    <div class="dashboard-title-wrapper">
-      <h1>Vecindario Tranquilo</h1>
-    </div>
-    <div class="user-badge">
-      <div class="user-info">
-        <p class="user-name">{{ userEmail }}</p>
-        <p class="user-role">Mediador</p>
-      </div>
-      <button class="btn-logout" (click)="onLogout()">Cerrar Sesión</button>
-    </div>
-  </header>
+<div class="shell">
 
-  <main class="dashboard-main">
-    <section class="welcome-section">
-      <h2>Panel del Mediador</h2>
-      <p>Bienvenido. Gestione sus audiencias de conciliación, supervise sus expedientes digitales y redacte actas de acuerdos.</p>
+  <!-- ══ SIDEBAR ══════════════════════════════════════════════ -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">🏘️</span>
+      <div>
+        <p class="brand-name">Vecindario</p>
+        <p class="brand-name brand-name--accent">Tranquilo</p>
+        <p class="brand-slogan">Panel del Mediador</p>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      @for (item of navItems; track item.route) {
+        <a class="nav-item" [class.nav-item--active]="item.active" [routerLink]="item.route">
+          <span class="nav-icon">{{ item.icon }}</span>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="btn-logout-side" (click)="onLogout()">
+        <span>🚪</span> Cerrar Sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN CONTENT ══════════════════════════════════════════ -->
+  <div class="main-content">
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div>
+        <h1 class="topbar-title">Panel del Mediador</h1>
+        <p class="topbar-date">{{ today | titlecase }}</p>
+      </div>
+      <div class="topbar-user">
+        <div class="avatar">{{ (userName ?? 'M')[0] | uppercase }}</div>
+        <div>
+          <p class="user-name">{{ userEmail }}</p>
+          <p class="user-role-badge">Mediador</p>
+        </div>
+        <button class="btn-logout-top" (click)="onLogout()">Cerrar Sesión</button>
+      </div>
+    </header>
+
+    <!-- Welcome Banner -->
+    <section class="welcome-banner">
+      <div>
+        <h2 class="welcome-title">¡Hola, {{ userName }}! Bienvenido a tu Panel de Mediación</h2>
+        <p class="welcome-sub">Gestione sus audiencias de conciliación, supervise sus expedientes digitales y redacte actas de acuerdos.</p>
+      </div>
+      <a routerLink="/mediador/casos" class="btn-primary-action">
+        📂 Ver Todos Mis Casos
+      </a>
     </section>
 
-    <div class="dashboard-grid">
-      <!-- Card 1 -->
-      <div class="card-stat">
-        <p class="stat-label">Casos Activos</p>
-        <p class="stat-value">{{ metricas.casosAsignados }}</p>
-        <p class="stat-desc">Casos bajo su tutela asignados para mediación</p>
-        <a routerLink="/mediador/casos" class="card-link">Ver mis casos</a>
+    <!-- Stat Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon--gold">⚡</div>
+        <div>
+          <p class="stat-num">{{ metricas.casosAsignados }}</p>
+          <p class="stat-lbl">Casos Activos</p>
+          <p class="stat-sub">Bajo su tutela asignados para mediación</p>
+        </div>
       </div>
-
-      <!-- Card 2 -->
-      <div class="card-stat">
-        <p class="stat-label">Sesiones Agendadas</p>
-        <p class="stat-value">{{ metricas.sesionesHoy }}</p>
-        <p class="stat-desc">Audiencias planificadas en su agenda de hoy</p>
-        <a href="#" class="card-link">Programar audiencia</a>
+      <div class="stat-card">
+        <div class="stat-icon stat-icon--blue">📅</div>
+        <div>
+          <p class="stat-num">{{ metricas.sesionesAgendadas }}</p>
+          <p class="stat-lbl">Sesiones Agendadas</p>
+          <p class="stat-sub">Audiencias planificadas próximamente</p>
+        </div>
       </div>
-
-      <!-- Card 3 -->
-      <div class="card-stat">
-        <p class="stat-label">Acuerdos Históricos</p>
-        <p class="stat-value">{{ metricas.acuerdosLogrados }}</p>
-        <p class="stat-desc">Acuerdos de conciliación formalizados exitosamente</p>
-        <a href="#" class="card-link">Ver resoluciones</a>
+      <div class="stat-card">
+        <div class="stat-icon stat-icon--green">🤝</div>
+        <div>
+          <p class="stat-num">{{ metricas.acuerdosLogrados }}</p>
+          <p class="stat-lbl">Acuerdos Históricos</p>
+          <p class="stat-sub">Acuerdos de conciliación formalizados</p>
+        </div>
       </div>
     </div>
-  </main>
+
+    <!-- Quick Action Cards -->
+    <div class="actions-grid">
+
+      <div class="action-card">
+        <div class="action-card-icon">📂</div>
+        <h3 class="action-title">Casos Asignados</h3>
+        <p class="action-desc">Visualiza todos los casos bajo tu tutela, su estado y las partes involucradas.</p>
+        <a routerLink="/mediador/casos" class="action-btn action-btn--primary">
+          Ver mis casos →
+        </a>
+      </div>
+
+      <div class="action-card action-card--highlight">
+        <div class="action-card-icon">📅</div>
+        <h3 class="action-title">Programar Audiencia</h3>
+        <p class="action-desc">Agenda una nueva sesión de mediación: fecha, hora, modalidad presencial o virtual.</p>
+        <a routerLink="/mediador/casos" class="action-btn action-btn--gold">
+          Ir a casos →
+        </a>
+      </div>
+
+      <div class="action-card">
+        <div class="action-card-icon">📝</div>
+        <h3 class="action-title">Resoluciones</h3>
+        <p class="action-desc">Consulta los acuerdos formalizados y el seguimiento de cumplimiento de cada punto.</p>
+        <a routerLink="/mediador/casos" class="action-btn action-btn--secondary">
+          Ver resoluciones →
+        </a>
+      </div>
+
+    </div>
+
+  </div>
 </div>

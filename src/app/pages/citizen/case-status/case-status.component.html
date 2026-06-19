@@ -1,0 +1,95 @@
+<div class="page-container">
+  <header class="page-header">
+    <a routerLink="/ciudadano/mis-casos" class="back-link">← Volver a Mis Casos</a>
+    <h1 class="page-title">Detalle del Caso #{{ caseId }}</h1>
+  </header>
+
+  <!-- Barra de Progreso del Caso -->
+  <div class="progress-card">
+    <h2 class="section-title">Estado Actual del Proceso</h2>
+    <div class="stepper">
+      @for (step of statusSteps; track step; let i = $index) {
+        <div class="step-item" [class.active]="i <= currentStepIndex">
+          <div class="step-dot" [class.current]="i === currentStepIndex">
+            @if (i < currentStepIndex) { ✓ }
+            @else { {{ i + 1 }} }
+          </div>
+          <span class="step-label">{{ step | titlecase }}</span>
+        </div>
+        @if (i < statusSteps.length - 1) {
+          <div class="step-connector" [class.active]="i < currentStepIndex"></div>
+        }
+      }
+    </div>
+  </div>
+
+  <!-- Información del Caso -->
+  <div class="info-grid">
+    <div class="info-card">
+      <h2 class="section-title">📋 Información del Conflicto</h2>
+      <div class="info-row">
+        <span class="info-label">Tipo:</span>
+        <span class="info-value">{{ caso.conflictType | titlecase }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Contraparte:</span>
+        <span class="info-value">{{ caso.respondentName }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Dirección:</span>
+        <span class="info-value">{{ caso.address }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Descripción:</span>
+        <span class="info-value">{{ caso.description }}</span>
+      </div>
+      @if (caso.evidenceUrls.length > 0) {
+        <div class="info-row">
+          <span class="info-label">Evidencias:</span>
+          <span class="info-value">
+            @for (url of caso.evidenceUrls; track url) {
+              <span class="evidence-chip">📎 {{ url }}</span>
+            }
+          </span>
+        </div>
+      }
+    </div>
+
+    <!-- Próxima Sesión -->
+    <div class="info-card">
+      <h2 class="section-title">📅 Próxima Sesión de Mediación</h2>
+      @if (nextSession) {
+        <div class="session-detail">
+          <p><strong>Fecha:</strong> {{ nextSession.scheduledDate }}</p>
+          <p><strong>Hora:</strong> {{ nextSession.scheduledTime }}</p>
+          <p><strong>Modalidad:</strong> {{ getModalityLabel(nextSession.modality) }}</p>
+          @if (nextSession.meetingLink) {
+            <a [href]="nextSession.meetingLink" target="_blank" class="btn-meeting">
+              🔗 Unirse a la sesión virtual
+            </a>
+          }
+        </div>
+      }
+      @if (!nextSession) {
+        <p class="no-session">Sin sesiones programadas por el momento.</p>
+      }
+    </div>
+  </div>
+
+  <!-- Acciones disponibles -->
+  @if (caso.status === 'en mediacion' || caso.status === 'resuelto') {
+    <div class="action-panel">
+      <h2 class="section-title">⚡ Acciones Disponibles</h2>
+      <div class="action-buttons">
+        <a [routerLink]="['/ciudadano/acuerdo', caso.id, 'confirmar']" class="btn-primary">
+          📝 Revisar y Confirmar Acuerdo
+        </a>
+        @if (caso.status === 'resuelto') {
+          <a [routerLink]="['/ciudadano/acuerdo', caso.id, 'cumplimiento']" class="btn-secondary">
+            ✅ Reportar Cumplimiento
+          </a>
+        }
+      </div>
+    </div>
+  }
+</div>

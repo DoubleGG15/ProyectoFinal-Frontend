@@ -1,0 +1,52 @@
+<div class="page-container">
+  <header class="page-header">
+    <button class="back-link" (click)="onGoBack()">← Volver al caso</button>
+    <h1 class="page-title">Reporte de Cumplimiento</h1>
+    <p class="page-subtitle">Indica si la contraparte cumplió cada punto del acuerdo</p>
+  </header>
+
+  @if (!submitted) {
+    <div class="agreement-summary">
+      <p class="agreement-text">{{ agreement.agreementText }}</p>
+    </div>
+
+    <form [formGroup]="complianceForm" (ngSubmit)="onSubmit()">
+      @for (point of agreement.points; track trackPoint($index, point)) {
+        <div class="point-card">
+          <div class="point-header">
+            <div class="point-number">{{ $index + 1 }}</div>
+            <div class="point-info">
+              <p class="point-description">{{ point.description }}</p>
+              <p class="point-deadline">📅 Plazo: <strong>{{ point.deadline }}</strong></p>
+            </div>
+          </div>
+
+          <mat-form-field appearance="outline" class="compliance-select">
+            <mat-label>Estado de cumplimiento</mat-label>
+            <mat-select [formControlName]="point.id">
+              @for (opt of complianceOptions; track opt.value) {
+                <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      }
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="onGoBack()">Cancelar</button>
+        <button type="submit" class="btn-primary" [disabled]="complianceForm.invalid">
+          Enviar Reporte
+        </button>
+      </div>
+    </form>
+  }
+
+  @if (submitted) {
+    <div class="success-state">
+      <div class="success-icon">✅</div>
+      <h2>Reporte Enviado</h2>
+      <p>El estado de cumplimiento ha sido registrado correctamente. El mediador será notificado.</p>
+      <a routerLink="/ciudadano/mis-casos" class="btn-primary">Volver a Mis Casos</a>
+    </div>
+  }
+</div>

@@ -1,0 +1,92 @@
+.page-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e8eaf6 100%);
+}
+
+.page-header { margin-bottom: 28px; }
+
+.back-link {
+  background: none; border: none;
+  color: #5c6bc0; font-size: 14px;
+  font-weight: 500; cursor: pointer; padding: 0;
+  margin-bottom: 10px; display: inline-block;
+}
+
+.back-link:hover { color: #3949ab; }
+
+.page-title { font-size: 26px; font-weight: 700; color: #1e293b; margin: 8px 0 4px; }
+.page-subtitle { color: #64748b; font-size: 14px; }
+
+.agreement-summary {
+  background: white;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 24px;
+  border-left: 4px solid #5c6bc0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.agreement-text { font-size: 14px; color: #475569; font-style: italic; margin: 0; }
+
+.point-card {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.07);
+}
+
+.point-header { display: flex; gap: 14px; margin-bottom: 14px; }
+
+.point-number {
+  width: 32px; height: 32px;
+  border-radius: 50%; background: #5c6bc0; color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px; flex-shrink: 0;
+}
+
+.point-info { flex: 1; }
+
+.point-description { font-size: 14px; color: #1e293b; margin: 0 0 6px; line-height: 1.5; }
+.point-deadline { font-size: 13px; color: #64748b; margin: 0; }
+
+.compliance-select { width: 100%; }
+
+.form-actions {
+  display: flex; gap: 12px; justify-content: flex-end;
+  margin-top: 24px; flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: linear-gradient(135deg, #5c6bc0, #3949ab);
+  color: white; border: none;
+  padding: 12px 28px; border-radius: 10px;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  text-decoration: none; transition: opacity 0.2s;
+}
+
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-secondary {
+  background: #f1f5f9; color: #475569; border: none;
+  padding: 12px 22px; border-radius: 10px;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-secondary:hover { background: #e2e8f0; }
+
+/* Success state */
+.success-state {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.success-icon { font-size: 72px; margin-bottom: 20px; }
+.success-state h2 { font-size: 24px; font-weight: 700; color: #059669; margin-bottom: 10px; }
+.success-state p { font-size: 15px; color: #64748b; margin-bottom: 28px; }

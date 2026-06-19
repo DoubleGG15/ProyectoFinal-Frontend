@@ -1,0 +1,60 @@
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🏘️ Plataforma de Mediación Comunitaria</div>
+    <h1 class="hero-title">Vecindario Tranquilo</h1>
+    <p class="hero-slogan">Conflictos que se resuelven, comunidades que crecen</p>
+    <p class="hero-desc">
+      Una plataforma digital que facilita la resolución estructurada de disputas vecinales,
+      con mediadores profesionales, expedientes digitales e inumtables y seguimiento transparente.
+    </p>
+    <div class="hero-actions">
+      <a routerLink="/register" class="btn-hero-primary">Comenzar Ahora</a>
+      <a routerLink="/login" class="btn-hero-secondary">Iniciar Sesión</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="floating-card card-1">
+      <span class="card-icon">✅</span>
+      <span>Caso Resuelto</span>
+    </div>
+    <div class="floating-card card-2">
+      <span class="card-icon">📋</span>
+      <span>Reporte Nuevo</span>
+    </div>
+    <div class="floating-card card-3">
+      <span class="card-icon">🤝</span>
+      <span>Acuerdo Firmado</span>
+    </div>
+    <div class="hero-circle"></div>
+  </div>
+</section>
+
+<!-- ══ FEATURES ══ -->
+<section class="features-section">
+  <h2 class="section-heading">¿Cómo funciona?</h2>
+  <p class="section-subheading">Un proceso claro, justo y completamente digital</p>
+
+  <div class="features-grid">
+    @for (feature of features; track feature.title) {
+      <div class="feature-card">
+        <div class="feature-icon">{{ feature.icon }}</div>
+        <h3 class="feature-title">{{ feature.title }}</h3>
+        <p class="feature-desc">{{ feature.description }}</p>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section class="cta-section">
+  <h2>¿Tienes un conflicto vecinal?</h2>
+  <p>Regístrate gratis y abre tu caso hoy mismo. Tu comunidad lo agradecerá.</p>
+  <a routerLink="/register" class="btn-cta">Registrarme Gratis →</a>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="landing-footer">
+  <p>© 2026 Vecindario Tranquilo — Programación IV-Web (CCC205)</p>
+</footer>

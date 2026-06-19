@@ -1,0 +1,89 @@
+﻿<div class="form-container">
+  <mat-card class="report-card">
+    <mat-card-header>
+      <mat-card-title>Registrar Nuevo Conflicto Vecinal</mat-card-title>
+      <mat-card-subtitle>Complete la información detallada para iniciar el proceso de mediación estructurada.</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Tipo de Conflicto</mat-label>
+          <mat-select formControlName="conflictType">
+            @for (type of conflictTypes; track type) {
+              <mat-option [value]="type">{{ type | titlecase }}</mat-option>
+            }
+          </mat-select>
+          @if (reportForm.get('conflictType')?.hasError('required') && reportForm.get('conflictType')?.touched) {
+            <mat-error>El tipo de conflicto es obligatorio.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Nombre de la Parte Denunciada (Contraparte)</mat-label>
+          <input matInput formControlName="respondentName" placeholder="Ej. Juan Pérez (Vecino del 4B)">
+          @if (reportForm.get('respondentName')?.touched) {
+            @if (reportForm.get('respondentName')?.hasError('required')) {
+              <mat-error>El nombre del denunciado es obligatorio.</mat-error>
+            }
+            @if (reportForm.get('respondentName')?.hasError('minlength')) {
+              <mat-error>Debe ingresar un nombre válido (mínimo 3 caracteres).</mat-error>
+            }
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Dirección Exacta del Incidente</mat-label>
+          <input matInput formControlName="address" placeholder="Ej. Bloque C, Casa 15, Avenida Principal">
+          @if (reportForm.get('address')?.touched) {
+            @if (reportForm.get('address')?.hasError('required')) {
+              <mat-error>La dirección es obligatoria.</mat-error>
+            }
+            @if (reportForm.get('address')?.hasError('minlength')) {
+              <mat-error>La dirección debe ser detallada (mínimo 10 caracteres).</mat-error>
+            }
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Descripción Detallada del Problema</mat-label>
+          <textarea matInput formControlName="description" rows="4" placeholder="Describa los hechos, fechas u horarios donde ocurre el conflicto..."></textarea>
+          @if (reportForm.get('description')?.touched) {
+            @if (reportForm.get('description')?.hasError('required')) {
+              <mat-error>La descripción es obligatoria.</mat-error>
+            }
+            @if (reportForm.get('description')?.hasError('minlength')) {
+              <mat-error>Describa detalladamente el problema (mínimo 20 caracteres).</mat-error>
+            }
+          }
+        </mat-form-field>
+
+        <div class="file-upload-wrapper">
+          <input type="file" #fileInput id="fileInput" style="display: none" (change)="onFileSelected($event)" accept="image/*,.pdf">
+          <label htmlFor="fileInput">
+            <button type="button" mat-raised-button color="accent" (click)="fileInput.click()">
+              <mat-icon>attach_file</mat-icon> Adjuntar Evidencia (JPG/PNG/PDF)
+            </button>
+          </label>
+
+          @if (selectedFile) {
+            <span class="file-name">✅ {{ selectedFile.name }}</span>
+          }
+          @if (fileError) {
+            <p class="error-text">❌ {{ fileError }}</p>
+          }
+        </div>
+
+        <div class="form-actions">
+          <button type="button" mat-button color="warn" (click)="clearForm()">Limpiar</button>
+          <button type="button" mat-button routerLink="/ciudadano/dashboard">Cancelar</button>
+          <button type="submit" mat-raised-button color="primary" [disabled]="reportForm.invalid || fileError !== null">
+            Registrar Reporte
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

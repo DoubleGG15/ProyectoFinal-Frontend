@@ -1,0 +1,60 @@
+<div class="page-container">
+  <header class="page-header">
+    <a routerLink="/ciudadano/dashboard" class="back-link">
+      <span class="back-icon">←</span> Volver al Panel
+    </a>
+    <h1 class="page-title">Mis Casos Registrados</h1>
+    <p class="page-subtitle">Seguimiento de todos tus reportes de conflicto vecinal</p>
+  </header>
+
+  @if (cases.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">📂</div>
+      <h2>Sin casos registrados</h2>
+      <p>Aún no has reportado ningún conflicto vecinal.</p>
+      <a routerLink="/ciudadano/reportar" class="btn-primary">Reportar mi primer conflicto</a>
+    </div>
+  }
+
+  @if (cases.length > 0) {
+    <div class="cases-grid">
+      @for (caso of cases; track caso.id) {
+        <div class="case-card">
+          <div class="case-card-header">
+            <div class="conflict-type-badge">{{ caso.conflictType | titlecase }}</div>
+            <div class="status-chip" [style.background-color]="getStatusColor(caso.status)">
+              {{ getStatusLabel(caso.status) }}
+            </div>
+          </div>
+
+          <div class="case-card-body">
+            <h3 class="case-respondent">vs. {{ caso.respondentName }}</h3>
+            <p class="case-address">📍 {{ caso.address }}</p>
+            <p class="case-description">{{ caso.description }}</p>
+
+            @if (caso.mediatorId) {
+              <p class="case-mediator">👨‍⚖️ Mediador asignado</p>
+            }
+            @if (caso.evidenceUrls.length > 0) {
+              <p class="case-evidence">📎 {{ caso.evidenceUrls.length }} archivo(s) adjunto(s)</p>
+            }
+          </div>
+
+          <div class="case-card-footer">
+            <a [routerLink]="['/ciudadano/caso', caso.id]" class="btn-detail">Ver Detalle →</a>
+
+            @if (caso.status === 'en mediacion' || caso.status === 'resuelto') {
+              <a [routerLink]="['/ciudadano/acuerdo', caso.id, 'confirmar']" class="btn-secondary">
+                Revisar Acuerdo
+              </a>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="report-action">
+      <a routerLink="/ciudadano/reportar" class="btn-primary">+ Reportar Nuevo Conflicto</a>
+    </div>
+  }
+</div>
