@@ -7,6 +7,7 @@ import { AssignedCasesComponent } from './features/mediator/pages/assigned-cases
 import { CaseDetail } from './features/mediator/pages/case-detail/case-detail';
 import { CitizenDashboardComponent } from './pages/citizen/dashboard/citizen-dashboard';
 import { roleGuard } from './core/guards/role.guard';
+<<<<<<< HEAD
 import { CaseReportFormComponent } from './features/casos/crear-caso/case-report-form.component';
 
 export const routes: Routes = [
@@ -23,6 +24,17 @@ export const routes: Routes = [
     component: AdminDashboardComponent,
     canActivate: [roleGuard(['Administrador', 'Admin'])],
   },
+=======
+import { AdminCasesComponent } from './pages/admin/cases/cases';
+
+export const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+
+  { path: 'admin/dashboard', component: AdminDashboardComponent },
+  { path: 'admin/casos', component: AdminCasesComponent },
+
+>>>>>>> b709c5b (avance)
   {
     path: 'mediador/dashboard',
     component: MediatorDashboard,
@@ -49,9 +61,16 @@ export const routes: Routes = [
     component: CaseReportFormComponent, // <-- Te marcará error en rojo hasta que crees este componente
     canActivate: [roleGuard(['Ciudadano'])],
   },
+<<<<<<< HEAD
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
   },
 ];
+=======
+
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login' }
+];
+>>>>>>> b709c5b (avance)
