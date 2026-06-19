@@ -1,0 +1,210 @@
+.page-container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 32px 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e8eaf6 100%);
+}
+
+.page-header { margin-bottom: 24px; }
+
+.back-link {
+  background: none;
+  border: none;
+  color: #5c6bc0;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.back-link:hover { color: #3949ab; }
+
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 8px 0 4px;
+}
+
+.page-subtitle { color: #64748b; font-size: 14px; }
+
+/* Immutability banner */
+.immutable-banner {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: white;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.formalized-date {
+  margin-left: auto;
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+/* Confirmation status */
+.confirmation-status {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.confirm-chip {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  background: #f1f5f9;
+  color: #94a3b8;
+  transition: all 0.3s;
+}
+
+.confirm-chip.done {
+  background: #d1fae5;
+  color: #059669;
+}
+
+/* Agreement card */
+.agreement-card {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 16px;
+}
+
+.agreement-text {
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.divider { margin: 24px 0 !important; }
+
+.points-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #334155;
+  margin: 0 0 16px;
+}
+
+.point-item {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 18px;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border-left: 4px solid #5c6bc0;
+}
+
+.point-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #5c6bc0;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.point-body { flex: 1; }
+
+.point-description {
+  font-size: 14px;
+  color: #1e293b;
+  margin: 0 0 6px;
+  line-height: 1.5;
+}
+
+.point-deadline {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Action panel */
+.action-panel {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  margin-bottom: 20px;
+}
+
+.action-warning {
+  font-size: 14px;
+  color: #b45309;
+  background: #fef3c7;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin: 0 0 16px;
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, #059669, #047857);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.btn-confirm:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.already-confirmed {
+  font-size: 15px;
+  color: #059669;
+  font-weight: 600;
+  padding: 12px;
+  background: #d1fae5;
+  border-radius: 10px;
+}
+
+/* Success banners */
+.success-banner {
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: #d1fae5;
+  color: #065f46;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 12px;
+  animation: fadeIn 0.4s ease;
+}
+
+.immutable-success {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: white;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

@@ -15,8 +15,23 @@ import { UsersComponent } from './pages/admin/users/users';
 import { CitizenDashboardComponent } from './pages/citizen/dashboard/citizen-dashboard';
 
 import { roleGuard } from './core/guards/role.guard';
+<<<<<<< HEAD
+=======
+import { CaseReportFormComponent } from './pages/citizen/case-report-form/case-report-form.component';
+import { MyCasesComponent } from './pages/citizen/my-cases/my-cases.component';
+import { CaseStatusComponent } from './pages/citizen/case-status/case-status.component';
+import { AgreementConfirmationComponent } from './pages/citizen/agreement-confirmation/agreement-confirmation.component';
+import { ComplianceReportComponent } from './pages/citizen/compliance-report/compliance-report.component';
+import { LandingComponent } from './pages/public/landing/landing.component';
+>>>>>>> main
 
 export const routes: Routes = [
+  // ── Pública ────────────────────────────────────────────────
+  {
+    path: '',
+    component: LandingComponent,
+    pathMatch: 'full',
+  },
   {
     path: 'login',
     component: LoginComponent
@@ -26,10 +41,16 @@ export const routes: Routes = [
     component: RegisterComponent
   },
 
+<<<<<<< HEAD
+=======
+  // ── Administrador ──────────────────────────────────────────
+>>>>>>> main
   {
     path: 'admin/dashboard',
     component: AdminDashboardComponent
   },
+
+  // ── Mediador ───────────────────────────────────────────────
   {
     path: 'admin/casos',
     component: AdminCasesComponent
@@ -58,15 +79,21 @@ export const routes: Routes = [
     component: CaseDetail,
     canActivate: [roleGuard(['Mediador'])]
   },
+<<<<<<< HEAD
 {
   path: 'admin/users',
   component: UsersComponent
 },
+=======
+
+  // ── Ciudadano ──────────────────────────────────────────────
+>>>>>>> main
   {
     path: 'ciudadano/dashboard',
     component: CitizenDashboardComponent,
     canActivate: [roleGuard(['Ciudadano'])]
   },
+<<<<<<< HEAD
 
 {
   path: '',
@@ -79,3 +106,37 @@ export const routes: Routes = [
   }
   
 ];
+=======
+  {
+    path: 'ciudadano/reportar',
+    component: CaseReportFormComponent,
+    canActivate: [roleGuard(['Ciudadano'])],
+  },
+  {
+    path: 'ciudadano/mis-casos',
+    component: MyCasesComponent,
+    canActivate: [roleGuard(['Ciudadano'])],
+  },
+  {
+    path: 'ciudadano/caso/:id',
+    component: CaseStatusComponent,
+    canActivate: [roleGuard(['Ciudadano'])],
+  },
+  {
+    path: 'ciudadano/acuerdo/:id/confirmar',
+    component: AgreementConfirmationComponent,
+    canActivate: [roleGuard(['Ciudadano'])],
+  },
+  {
+    path: 'ciudadano/acuerdo/:id/cumplimiento',
+    component: ComplianceReportComponent,
+    canActivate: [roleGuard(['Ciudadano'])],
+  },
+
+  // ── Fallback ───────────────────────────────────────────────
+  {
+    path: '**',
+    redirectTo: '',
+  },
+];
+>>>>>>> main

@@ -1,37 +1,57 @@
-<div class="container mt-4">
-  <h2>Casos Asignados para Mediación</h2>
-  <p>Selecciona un caso para ver sus detalles, agendar sesiones o registrar acuerdos.</p>
+<div class="page-container">
 
-  <div class="table-responsive" *ngIf="casos.length > 0; else noCasos">
-    <table class="table table-striped table-hover">
-      <thead class="table-dark">
-        <tr>
-          <th>ID Caso</th>
-          <th>Descripción</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let caso of casos">
-          <td>{{ caso.id }}</td>
-          <td>{{ caso.descripcion }}</td>
-          <td>
-            <span class="badge bg-warning text-dark">{{ caso.estado }}</span>
-          </td>
-          <td>
-            <button class="btn btn-primary btn-sm">
-              Ver Detalle
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="page-header">
+    <a routerLink="/mediador/dashboard" class="back-link">← Volver al Panel</a>
+    <h1 class="page-title">Casos Asignados para Mediación</h1>
+    <p class="page-sub">Selecciona un caso para ver sus detalles, agendar sesiones o registrar acuerdos.</p>
   </div>
 
-  <ng-template #noCasos>
-    <div class="alert alert-info" role="alert">
-      No tienes casos asignados en este momento.
+  @if (isLoading) {
+    <div class="loading-state">
+      <p>⏳ Cargando casos...</p>
     </div>
-  </ng-template>
-  
+  }
+
+  @if (!isLoading && errorMsg) {
+    <div class="error-banner">⚠️ {{ errorMsg }}</div>
+  }
+
+  @if (!isLoading && casos.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">📂</div>
+      <h2>Sin casos asignados</h2>
+      <p>No tienes casos asignados en este momento. El administrador te asignará nuevos casos pronto.</p>
+    </div>
+  }
+
+  @if (!isLoading && casos.length > 0) {
+    <div class="cases-list">
+      @for (caso of casos; track caso.id) {
+        <div class="case-row">
+          <div class="case-main">
+            <div class="case-header-row">
+              <span class="case-id">#{{ caso.id.slice(0, 8) }}</span>
+              <span class="status-badge" [style.background-color]="getStatusColor(caso.status)">
+                {{ getStatusLabel(caso.status) }}
+              </span>
+            </div>
+            <h3 class="case-type">{{ caso.conflictType | titlecase }}</h3>
+            <p class="case-desc">{{ caso.description }}</p>
+            <div class="case-meta">
+              <span>📍 {{ caso.address }}</span>
+              @if (caso.evidenceUrls.length > 0) {
+                <span>📎 {{ caso.evidenceUrls.length }} evidencia(s)</span>
+              }
+            </div>
+          </div>
+          <div class="case-actions">
+            <a [routerLink]="['/mediador/caso', caso.id]" class="btn-detail">
+              Ver Detalle →
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+</div>
