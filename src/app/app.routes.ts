@@ -11,7 +11,7 @@ import { ReportsComponent } from './pages/admin/reports/reports';
 import { MediatorDashboard } from './features/mediator/pages/mediator-dashboard/mediator-dashboard';
 import { AssignedCasesComponent } from './features/mediator/pages/assigned-cases/assigned-cases';
 import { CaseDetail } from './features/mediator/pages/case-detail/case-detail';
-
+import { UsersComponent } from './pages/admin/users/users';
 import { CitizenDashboardComponent } from './pages/citizen/dashboard/citizen-dashboard';
 
 import { roleGuard } from './core/guards/role.guard';
@@ -58,7 +58,10 @@ export const routes: Routes = [
     component: CaseDetail,
     canActivate: [roleGuard(['Mediador'])]
   },
-
+{
+  path: 'admin/users',
+  component: UsersComponent
+},
   {
     path: 'ciudadano/dashboard',
     component: CitizenDashboardComponent,
@@ -74,4 +77,5 @@ export const routes: Routes = [
     path: '**',
     redirectTo: 'login'
   }
+  
 ];
