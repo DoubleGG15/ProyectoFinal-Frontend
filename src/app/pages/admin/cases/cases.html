@@ -1,3 +1,4 @@
+
 <h1>Gestión de Casos</h1>
 
 <p style="color: red;" *ngIf="errorMessage">{{ errorMessage }}</p>
@@ -29,7 +30,6 @@
       <td>
         <select [(ngModel)]="mediadorSeleccionado[caso.id]">
           <option value="">Seleccione mediador</option>
-
           <option *ngFor="let mediador of mediadores" [value]="mediador.Id">
             {{ mediador.FullName }} - {{ mediador.Email }}
           </option>

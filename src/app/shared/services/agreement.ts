@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AgreementService {
-  private apiSesionesUrl = '/api/sesiones';
-  private apiCasosUrl = '/api/casos';
+ private apiSesionesUrl = 'http://localhost:5235/api/Sesiones';
+  private apiCasosUrl = 'http://localhost:5235/api/casos';
 
   constructor(private http: HttpClient) { }
 
