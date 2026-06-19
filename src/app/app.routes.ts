@@ -32,79 +32,79 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
   },
 
   {
     path: 'admin/dashboard',
-    component: AdminDashboardComponent
+    component: AdminDashboardComponent,
   },
   {
     path: 'admin/users',
-    component: UsersComponent
+    component: UsersComponent,
   },
   {
     path: 'admin/casos',
-    component: AdminCasesComponent
+    component: AdminCasesComponent,
   },
   {
     path: 'admin/mediadores',
-    component: MediadoresComponent
+    component: MediadoresComponent,
   },
   {
     path: 'admin/reportes',
-    component: ReportsComponent
+    component: ReportsComponent,
   },
 
   {
     path: 'mediador/dashboard',
     component: MediatorDashboard,
-    canActivate: [roleGuard(['Mediador'])]
+    canActivate: [roleGuard(['Mediador', 'mediador'])],
   },
   {
     path: 'mediador/casos',
     component: AssignedCasesComponent,
-    canActivate: [roleGuard(['Mediador'])]
+    canActivate: [roleGuard(['Mediador', 'mediador'])],
   },
   {
     path: 'mediador/caso/:id',
     component: CaseDetail,
-    canActivate: [roleGuard(['Mediador'])]
+    canActivate: [roleGuard(['Mediador', 'mediador'])],
   },
 
   {
     path: 'ciudadano/dashboard',
     component: CitizenDashboardComponent,
-    canActivate: [roleGuard(['Ciudadano'])]
+    canActivate: [roleGuard(['Ciudadano', 'ciudadano'])],
   },
   {
     path: 'ciudadano/reportar',
     component: CaseReportFormComponent,
-    canActivate: [roleGuard(['Ciudadano'])]
+    canActivate: [roleGuard(['Ciudadano', 'ciudadano'])],
   },
   {
     path: 'ciudadano/mis-casos',
     component: MyCasesComponent,
-    canActivate: [roleGuard(['Ciudadano'])]
+    canActivate: [roleGuard(['Ciudadano', 'ciudadano'])],
   },
   {
     path: 'ciudadano/caso/:id',
     component: CaseStatusComponent,
-    canActivate: [roleGuard(['Ciudadano'])]
+    canActivate: [roleGuard(['Ciudadano', 'ciudadano'])],
   },
   {
     path: 'ciudadano/acuerdo/:id/confirmar',
     component: AgreementConfirmationComponent,
-    canActivate: [roleGuard(['Ciudadano'])]
+    canActivate: [roleGuard(['Ciudadano', 'ciudadano'])],
   },
   {
     path: 'ciudadano/acuerdo/:id/cumplimiento',
     component: ComplianceReportComponent,
-    canActivate: [roleGuard(['Ciudadano'])]
+    canActivate: [roleGuard(['Ciudadano', 'ciudadano'])],
   },
 
   {
