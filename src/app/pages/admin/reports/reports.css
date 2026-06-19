@@ -1,0 +1,12 @@
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.report-card {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 20px;
+}

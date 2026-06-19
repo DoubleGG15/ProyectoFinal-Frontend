@@ -1,12 +1,17 @@
 <h1>Gestión de Casos</h1>
 
-<p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
-<p *ngIf="successMessage" style="color: green;">{{ successMessage }}</p>
+<p style="color: red;" *ngIf="errorMessage">
+  {{ errorMessage }}
+</p>
 
-<p>Total de casos: {{ casos?.length }}</p>
-<p>Total de mediadores: {{ mediadores?.length }}</p>
+<p style="color: lightgreen;" *ngIf="successMessage">
+  {{ successMessage }}
+</p>
 
-<table *ngIf="casos.length > 0" border="1">
+<p>Total de casos: {{ casos.length }}</p>
+<p>Total de mediadores: {{ mediadores.length }}</p>
+
+<table border="1" *ngIf="casos.length > 0">
   <thead>
     <tr>
       <th>ID</th>
@@ -29,9 +34,8 @@
       <td>
         <select [(ngModel)]="mediadorSeleccionado[caso.id]">
           <option value="">Seleccione mediador</option>
-          <option
-            *ngFor="let mediador of mediadores"
-            [value]="mediador.Id">
+
+          <option *ngFor="let mediador of mediadores" [value]="mediador.Id">
             {{ mediador.FullName }} - {{ mediador.Email }}
           </option>
         </select>
@@ -44,4 +48,6 @@
   </tbody>
 </table>
 
-<p *ngIf="casos.length === 0">No hay casos registrados.</p>
+<p *ngIf="casos.length === 0">
+  No hay casos registrados.
+</p>

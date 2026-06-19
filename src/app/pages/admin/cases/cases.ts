@@ -24,22 +24,34 @@ export class AdminCasesComponent implements OnInit {
   }
 
   cargarDatos(): void {
-    this.adminService.listarCasos().subscribe({
-      next: (data) => this.casos = data,
-      error: (err) => {
-        console.error(err);
-        this.errorMessage = 'Error al cargar casos';
-      }
-    });
+  this.adminService.listarCasos().subscribe({
+    next: (data: any) => {
+      console.log('CASOS RAW:', data);
 
-    this.adminService.listarMediadores().subscribe({
-      next: (data) => this.mediadores = data,
-      error: (err) => {
-        console.error(err);
-        this.errorMessage = 'Error al cargar mediadores';
-      }
-    });
-  }
+      this.casos = Array.isArray(data) ? data : data.$values || [];
+
+      console.log('CASOS FINAL:', this.casos);
+    },
+    error: (err: any) => {
+      console.error(err);
+      this.errorMessage = 'Error al cargar casos';
+    }
+  });
+
+  this.adminService.listarMediadores().subscribe({
+    next: (data: any) => {
+      console.log('MEDIADORES RAW:', data);
+
+      this.mediadores = Array.isArray(data) ? data : data.$values || [];
+
+      console.log('MEDIADORES FINAL:', this.mediadores);
+    },
+    error: (err: any) => {
+      console.error(err);
+      this.errorMessage = 'Error al cargar mediadores';
+    }
+  });
+}
 
   asignarMediador(casoId: string): void {
     const mediadorId = this.mediadorSeleccionado[casoId];
@@ -49,16 +61,16 @@ export class AdminCasesComponent implements OnInit {
       return;
     }
 
-    this.adminService.listarCasos().subscribe({
-  next: (data: any[]) => this.casos = data,
-  error: (err: any) => {
-    console.error(err);
-    this.errorMessage = 'Error al cargar casos';
-  }
-});
-error: (err: any) => {
-  console.error(err);
-  this.errorMessage = err.error?.message || 'Error al asignar mediador';
-}
+    this.adminService.asignarMediadorCaso(casoId, mediadorId).subscribe({
+      next: () => {
+        this.successMessage = 'Mediador asignado correctamente';
+        this.errorMessage = '';
+        this.cargarDatos();
+      },
+      error: (err: any) => {
+        console.error(err);
+        this.errorMessage = err.error?.message || 'Error al asignar mediador';
+      }
+    });
   }
 }
