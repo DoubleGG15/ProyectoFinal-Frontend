@@ -7,10 +7,18 @@ import { AssignedCasesComponent } from './features/mediator/pages/assigned-cases
 import { CaseDetail } from './features/mediator/pages/case-detail/case-detail';
 import { CitizenDashboardComponent } from './pages/citizen/dashboard/citizen-dashboard';
 import { roleGuard } from './core/guards/role.guard';
-<<<<<<< HEAD
+import { LandingComponent } from './pages/public/landing/landing.component';
+import { CaseStatusComponent } from './pages/citizen/case-status/case-status.component';
+import { AgreementConfirmationComponent } from './pages/citizen/agreement-confirmation/agreement-confirmation.component';
+import { ComplianceReportComponent } from './pages/citizen/compliance-report/compliance-report.component';
 import { CaseReportFormComponent } from './features/casos/crear-caso/case-report-form.component';
 
 export const routes: Routes = [
+  // --- Rutas Públicas ---
+  { 
+    path: 'inicio', 
+    component: LandingComponent 
+  },
   {
     path: 'login',
     component: LoginComponent,
@@ -19,12 +27,34 @@ export const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
   },
+
+  // --- Rutas del Ciudadano ---
+  {
+    path: 'ciudadano/dashboard',
+    component: CitizenDashboardComponent,
+    canActivate: [roleGuard(['Ciudadano'])]
+  },
+  {
+    path: 'ciudadano/estado',
+    component: CaseStatusComponent
+  },
+  {
+    path: 'ciudadano/acuerdo',
+    component: AgreementConfirmationComponent
+  },
+  {
+    path: 'ciudadano/reporte',
+    component: ComplianceReportComponent
+  },
+  
+  // --- Rutas de Administrador ---
   {
     path: 'admin/dashboard',
     component: AdminDashboardComponent,
     canActivate: [roleGuard(['Administrador', 'Admin'])],
   },
-=======
+
+  // --- Rutas de Mediador ---
 import { AdminCasesComponent } from './pages/admin/cases/cases';
 
 export const routes: Routes = [
@@ -34,7 +64,7 @@ export const routes: Routes = [
   { path: 'admin/dashboard', component: AdminDashboardComponent },
   { path: 'admin/casos', component: AdminCasesComponent },
 
->>>>>>> b709c5b (avance)
+
   {
     path: 'mediador/dashboard',
     component: MediatorDashboard,
@@ -50,6 +80,18 @@ export const routes: Routes = [
     component: CaseDetail,
     canActivate: [roleGuard(['Mediador'])],
   },
+
+  // --- Rutas Comodín y Redirecciones ---
+  {
+    path: '',
+    redirectTo: 'inicio', // Redirige a la nueva landing page por defecto
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: 'inicio'
+  }
+];
   {
     path: 'ciudadano/dashboard',
     component: CitizenDashboardComponent,
@@ -61,16 +103,14 @@ export const routes: Routes = [
     component: CaseReportFormComponent, // <-- Te marcará error en rojo hasta que crees este componente
     canActivate: [roleGuard(['Ciudadano'])],
   },
-<<<<<<< HEAD
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
   },
 ];
-=======
 
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }
 ];
->>>>>>> b709c5b (avance)
+
