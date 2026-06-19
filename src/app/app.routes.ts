@@ -92,3 +92,8 @@ export const routes: Routes = [
     redirectTo: '',
   },
 ];
+
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login' }
+];
+

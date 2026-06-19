@@ -11,30 +11,36 @@ import { AgreementService } from '../../../../shared/services/agreement';
   styleUrls: ['./agreement-form.css']
 })
 export class AgreementForm {
-  @Input() casoId: any;
+  @Input() casoId: string = '';
   @Output() onGuardado = new EventEmitter<void>();
 
   acuerdo = {
-    tipoAcuerdo: 'Total',
-    descripcion: '',
-    compromisos: ''
+    agreementText: '',
+    points: ''
   };
 
   constructor(private agreementService: AgreementService) {}
 
   guardarAcuerdo(): void {
     const datosEnvio = {
-      casoId: this.casoId,
-      ...this.acuerdo
+      caseId: this.casoId,
+      agreementText: this.acuerdo.agreementText,
+      points: [
+        {
+          description: this.acuerdo.points,
+          deadline: new Date().toISOString()
+        }
+      ]
     };
 
     this.agreementService.registrarAcuerdo(datosEnvio).subscribe({
       next: () => {
         alert('¡Acuerdo registrado de manera formal!');
-        this.onGuardado.emit(); // Regresa al detalle
+        this.onGuardado.emit();
       },
       error: (err) => {
         console.error('Error al registrar acuerdo:', err);
+        alert(err.error?.message || 'Error al registrar acuerdo');
       }
     });
   }
