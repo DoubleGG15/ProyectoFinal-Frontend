@@ -1,0 +1,26 @@
+<h1>Reportar Conflicto</h1>
+
+<p *ngIf="errorMessage">{{ errorMessage }}</p>
+<p *ngIf="successMessage">{{ successMessage }}</p>
+
+<label>Título</label>
+<input type="text" [(ngModel)]="titulo">
+
+<label>Descripción</label>
+<textarea [(ngModel)]="descripcion"></textarea>
+
+<label>Dirección</label>
+<input type="text" [(ngModel)]="direccion">
+
+<label>Categoría</label>
+<input type="text" [(ngModel)]="categoria">
+
+<label>ID contraparte</label>
+<input type="text" [(ngModel)]="contraparteId">
+
+<label>Zona</label>
+<input type="text" [(ngModel)]="zoneId">
+
+<button (click)="crearCaso()" [disabled]="isLoading">
+  {{ isLoading ? 'Creando...' : 'Crear Caso' }}
+</button>

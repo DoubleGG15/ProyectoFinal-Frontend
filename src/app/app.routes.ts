@@ -2,15 +2,20 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login';
 import { RegisterComponent } from './pages/register/register';
 import { AdminDashboardComponent } from './pages/admin/dashboard/dashboard';
+import { UsersComponent } from './pages/admin/users/users';
+import { MediadoresComponent } from './pages/admin/mediadores/mediadores';
+import { ReportCaseComponent } from './pages/citizen/report-case/report-case';
 import { MediatorDashboard } from './features/mediator/pages/mediator-dashboard/mediator-dashboard';
 import { AssignedCasesComponent } from './features/mediator/pages/assigned-cases/assigned-cases';
 import { CaseDetail } from './features/mediator/pages/case-detail/case-detail';
 import { CitizenDashboardComponent } from './pages/citizen/dashboard/citizen-dashboard';
 import { roleGuard } from './core/guards/role.guard';
-import { LandingComponent } from './pages/public/landing/landing.component';
-import { CaseStatusComponent } from './pages/citizen/case-status/case-status.component';
-import { AgreementConfirmationComponent } from './pages/citizen/agreement-confirmation/agreement-confirmation.component';
-import { ComplianceReportComponent } from './pages/citizen/compliance-report/compliance-report.component';
+
+// --- Tus importaciones (Corregidas sin el .component) ---
+import { LandingComponent } from './pages/public/landing/landing';
+import { CaseStatusComponent } from './pages/citizen/case-status/case-status';
+import { AgreementConfirmationComponent } from './pages/citizen/agreement-confirmation/agreement-confirmation';
+import { ComplianceReportComponent } from './pages/citizen/compliance-report/compliance-report';
 
 export const routes: Routes = [
   // --- Rutas Públicas ---
@@ -45,6 +50,10 @@ export const routes: Routes = [
     path: 'ciudadano/reporte',
     component: ComplianceReportComponent
   },
+  { 
+    path: 'ciudadano/reportar-caso', 
+    component: ReportCaseComponent 
+  },
   
   // --- Rutas de Administrador ---
   {
@@ -70,10 +79,10 @@ export const routes: Routes = [
     canActivate: [roleGuard(['Mediador'])]
   },
 
-  // --- Rutas Comodín y Redirecciones ---
+  // --- Rutas Comodín y Redirecciones (SIEMPRE AL FINAL) ---
   {
     path: '',
-    redirectTo: 'inicio', // Redirige a la nueva landing page por defecto
+    redirectTo: 'inicio',
     pathMatch: 'full'
   },
   {
