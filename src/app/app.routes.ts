@@ -65,9 +65,9 @@ export const routes: Routes = [
     canActivate: [roleGuard(['Ciudadano'])]
   },
 
- {
+{
   path: '',
-  redirectTo: 'admin/reportes',
+  redirectTo: 'login',
   pathMatch: 'full'
 },
   {
