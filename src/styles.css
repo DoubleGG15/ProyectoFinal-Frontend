@@ -1,4 +1,4 @@
-/* Import Angular Material Core Styles if needed, or define custom theme styles */
+
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 :root {

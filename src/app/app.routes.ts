@@ -11,6 +11,7 @@ import { LandingComponent } from './pages/public/landing/landing.component';
 import { CaseStatusComponent } from './pages/citizen/case-status/case-status.component';
 import { AgreementConfirmationComponent } from './pages/citizen/agreement-confirmation/agreement-confirmation.component';
 import { ComplianceReportComponent } from './pages/citizen/compliance-report/compliance-report.component';
+import { CaseReportFormComponent } from './features/casos/crear-caso/case-report-form.component';
 
 export const routes: Routes = [
   // --- Rutas Públicas ---
@@ -20,11 +21,11 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
   },
 
   // --- Rutas del Ciudadano ---
@@ -50,24 +51,34 @@ export const routes: Routes = [
   {
     path: 'admin/dashboard',
     component: AdminDashboardComponent,
-    canActivate: [roleGuard(['Administrador', 'Admin'])]
+    canActivate: [roleGuard(['Administrador', 'Admin'])],
   },
 
   // --- Rutas de Mediador ---
+import { AdminCasesComponent } from './pages/admin/cases/cases';
+
+export const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+
+  { path: 'admin/dashboard', component: AdminDashboardComponent },
+  { path: 'admin/casos', component: AdminCasesComponent },
+
+
   {
     path: 'mediador/dashboard',
     component: MediatorDashboard,
-    canActivate: [roleGuard(['Mediador'])]
+    canActivate: [roleGuard(['Mediador'])],
   },
   {
     path: 'mediador/casos',
     component: AssignedCasesComponent,
-    canActivate: [roleGuard(['Mediador'])]
+    canActivate: [roleGuard(['Mediador'])],
   },
   {
     path: 'mediador/caso/:id',
     component: CaseDetail,
-    canActivate: [roleGuard(['Mediador'])]
+    canActivate: [roleGuard(['Mediador'])],
   },
 
   // --- Rutas Comodín y Redirecciones ---
@@ -81,3 +92,25 @@ export const routes: Routes = [
     redirectTo: 'inicio'
   }
 ];
+  {
+    path: 'ciudadano/dashboard',
+    component: CitizenDashboardComponent,
+    canActivate: [roleGuard(['Ciudadano'])],
+  },
+  // AGREGA ESTA NUEVA RUTA PARA EL FORMULARIO
+  {
+    path: 'ciudadano/reportar',
+    component: CaseReportFormComponent, // <-- Te marcará error en rojo hasta que crees este componente
+    canActivate: [roleGuard(['Ciudadano'])],
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+];
+
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login' }
+];
+

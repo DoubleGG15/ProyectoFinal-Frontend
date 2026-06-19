@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
 })
 export class AdminService {
   private apiUrl = 'http://localhost:5235/api/admin';
+  private casosUrl = 'http://localhost:5235/api/casos';
 
   constructor(
     private http: HttpClient,
@@ -54,9 +55,26 @@ export class AdminService {
       headers: this.getHeaders()
     });
   }
+
   desactivarMediador(userId: string): Observable<any> {
-  return this.http.post(`${this.apiUrl}/desactivar-mediador/${userId}`, {}, {
-    headers: this.getHeaders()
-  });
-}
+    return this.http.post(`${this.apiUrl}/desactivar-mediador/${userId}`, {}, {
+      headers: this.getHeaders()
+    });
+  }
+
+  listarCasos(): Observable<any[]> {
+    return this.http.get<any[]>(this.casosUrl, {
+      headers: this.getHeaders()
+    });
+  }
+
+  asignarMediadorCaso(casoId: string, mediadorId: string): Observable<any> {
+    return this.http.put(
+      `${this.casosUrl}/${casoId}/asignar-mediador`,
+      JSON.stringify(mediadorId),
+      {
+        headers: this.getHeaders().set('Content-Type', 'application/json')
+      }
+    );
+  }
 }
