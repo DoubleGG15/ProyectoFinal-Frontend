@@ -14,3 +14,16 @@
   border-radius: 8px;
   width: 250px;
 }
+.card-link {
+  background: none;
+  border: none;
+  color: #f5c84b;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  font-size: 15px;
+}
+
+.card-link:hover {
+  text-decoration: underline;
+}

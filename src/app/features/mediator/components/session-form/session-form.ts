@@ -11,31 +11,37 @@ import { SessionService } from '../../../../shared/services/session';
   styleUrls: ['./session-form.css']
 })
 export class SessionForm {
-  @Input() casoId: any;
+  @Input() casoId: string = '';
   @Output() onGuardado = new EventEmitter<void>();
 
   sesion = {
-    fecha: '',
-    hora: '',
-    linkReunion: '',
-    notas: ''
+    scheduledDate: '',
+    scheduledTime: '',
+    modality: 'Virtual',
+    meetingLink: '',
+    sessionNotes: ''
   };
 
   constructor(private sessionService: SessionService) {}
 
   guardarSesion(): void {
     const datosEnvio = {
-      casoId: this.casoId,
-      ...this.sesion
+      caseId: this.casoId,
+      scheduledDate: this.sesion.scheduledDate,
+      scheduledTime: this.sesion.scheduledTime,
+      modality: this.sesion.modality,
+      meetingLink: this.sesion.meetingLink,
+      sessionNotes: this.sesion.sessionNotes
     };
 
     this.sessionService.agendarSesion(datosEnvio).subscribe({
       next: () => {
         alert('¡Sesión agendada con éxito!');
-        this.onGuardado.emit(); // Notifica al componente padre para regresar
+        this.onGuardado.emit();
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error al agendar la sesión:', err);
+        alert(err.error?.message || 'Error al agendar la sesión');
       }
     });
   }
