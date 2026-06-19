@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../../services/admin.service';
@@ -13,51 +13,64 @@ import { AdminService } from '../../../services/admin.service';
 export class AdminCasesComponent implements OnInit {
   casos: any[] = [];
   mediadores: any[] = [];
+
   mediadorSeleccionado: { [key: string]: string } = {};
   errorMessage = '';
   successMessage = '';
 
-  constructor(private adminService: AdminService) {}
+  constructor(
+    private adminService: AdminService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.cargarDatos();
   }
 
   cargarDatos(): void {
-  this.adminService.listarCasos().subscribe({
-    next: (data: any) => {
-      console.log('CASOS RAW:', data);
+    this.adminService.listarCasos().subscribe({
+      next: (data: any) => {
+        this.casos = Array.isArray(data)
+          ? data
+          : data.$values ?? data.Values ?? [];
 
-      this.casos = Array.isArray(data) ? data : data.$values || [];
+        console.log('CASOS:', this.casos);
+        this.cd.detectChanges();
+      },
+      error: (err: any) => {
+        console.error('ERROR CASOS:', err);
+        this.errorMessage = 'Error al cargar casos';
+        this.cd.detectChanges();
+      }
+    });
 
-      console.log('CASOS FINAL:', this.casos);
-    },
-    error: (err: any) => {
-      console.error(err);
-      this.errorMessage = 'Error al cargar casos';
-    }
-  });
+    this.adminService.listarMediadores().subscribe({
+      next: (data: any) => {
+        this.mediadores = Array.isArray(data)
+          ? data
+          : data.$values ?? data.Values ?? [];
 
-  this.adminService.listarMediadores().subscribe({
-    next: (data: any) => {
-      console.log('MEDIADORES RAW:', data);
+        console.log('MEDIADORES:', this.mediadores);
+        this.cd.detectChanges();
+      },
+      error: (err: any) => {
+        console.error('ERROR MEDIADORES:', err);
+        this.errorMessage = 'Error al cargar mediadores';
+        this.cd.detectChanges();
+      }
+    });
+  }
 
-      this.mediadores = Array.isArray(data) ? data : data.$values || [];
-
-      console.log('MEDIADORES FINAL:', this.mediadores);
-    },
-    error: (err: any) => {
-      console.error(err);
-      this.errorMessage = 'Error al cargar mediadores';
-    }
-  });
-}
+  getId(item: any): string {
+    return item.id || item.Id || item.casoId || item.CasoId || item.userId || item.UserId || '';
+  }
 
   asignarMediador(casoId: string): void {
     const mediadorId = this.mediadorSeleccionado[casoId];
 
     if (!mediadorId) {
       this.errorMessage = 'Seleccione un mediador';
+      this.successMessage = '';
       return;
     }
 
@@ -65,11 +78,17 @@ export class AdminCasesComponent implements OnInit {
       next: () => {
         this.successMessage = 'Mediador asignado correctamente';
         this.errorMessage = '';
-        this.cargarDatos();
+
+        setTimeout(() => {
+          this.cargarDatos();
+          this.cd.detectChanges();
+        }, 300);
       },
       error: (err: any) => {
-        console.error(err);
+        console.error('ERROR ASIGNAR:', err);
         this.errorMessage = err.error?.message || 'Error al asignar mediador';
+        this.successMessage = '';
+        this.cd.detectChanges();
       }
     });
   }
