@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AdminService } from '../../../services/admin.service';
 import { AuthService } from '../../../services/auth.service';
 
@@ -16,11 +16,12 @@ export class AdminDashboardComponent implements OnInit {
   totalCasos: number = 0;
   errorMessage: string = '';
   userEmail: string | null = '';
+  dashboard: any; // Propiedad declarada para almacenar los datos del dashboard
 
   constructor(
     private adminService: AdminService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -36,10 +37,10 @@ export class AdminDashboardComponent implements OnInit {
         this.dashboard = {
           TotalUsuarios: 25,
           TotalCasos: 18,
-          TotalMediadores: 4
+          TotalMediadores: 4,
         };
         this.errorMessage = 'Nota: Mostrando datos locales de respaldo.';
-      }
+      },
     });
   }
 

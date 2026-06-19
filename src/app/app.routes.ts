@@ -7,48 +7,51 @@ import { AssignedCasesComponent } from './features/mediator/pages/assigned-cases
 import { CaseDetail } from './features/mediator/pages/case-detail/case-detail';
 import { CitizenDashboardComponent } from './pages/citizen/dashboard/citizen-dashboard';
 import { roleGuard } from './core/guards/role.guard';
+import { CaseReportFormComponent } from './features/casos/crear-caso/case-report-form.component';
 
 export const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
   },
   {
     path: 'admin/dashboard',
     component: AdminDashboardComponent,
-    canActivate: [roleGuard(['Administrador', 'Admin'])]
+    canActivate: [roleGuard(['Administrador', 'Admin'])],
   },
   {
     path: 'mediador/dashboard',
     component: MediatorDashboard,
-    canActivate: [roleGuard(['Mediador'])]
+    canActivate: [roleGuard(['Mediador'])],
   },
   {
     path: 'mediador/casos',
     component: AssignedCasesComponent,
-    canActivate: [roleGuard(['Mediador'])]
+    canActivate: [roleGuard(['Mediador'])],
   },
   {
     path: 'mediador/caso/:id',
     component: CaseDetail,
-    canActivate: [roleGuard(['Mediador'])]
+    canActivate: [roleGuard(['Mediador'])],
   },
   {
     path: 'ciudadano/dashboard',
     component: CitizenDashboardComponent,
-    canActivate: [roleGuard(['Ciudadano'])]
+    canActivate: [roleGuard(['Ciudadano'])],
+  },
+  // AGREGA ESTA NUEVA RUTA PARA EL FORMULARIO
+  {
+    path: 'ciudadano/reportar',
+    component: CaseReportFormComponent, // <-- Te marcará error en rojo hasta que crees este componente
+    canActivate: [roleGuard(['Ciudadano'])],
   },
   {
     path: '',
     redirectTo: 'login',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
-  {
-    path: '**',
-    redirectTo: 'login'
-  }
 ];
