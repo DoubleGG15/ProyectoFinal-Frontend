@@ -1,4 +1,10 @@
-﻿export type UserRole='admin' | 'Mediador' | 'Ciudadano';
+﻿export type UserRole =
+  | 'admin'
+  | 'mediador'
+  | 'ciudadano'
+  | 'Mediador'
+  | 'Ciudadano'
+  | 'Admin';
 
 export type ConflictStatus=
   |'nuevo' | 'asignado' | 'en mediacion' | 'resuelto' | 'cerrado sin acuerdo';
