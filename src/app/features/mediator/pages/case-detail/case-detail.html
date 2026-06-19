@@ -1,1 +1,27 @@
-<p>case-detail works!</p>
+<div class="container mt-4">
+  <h2>Detalle del Caso</h2>
+
+  <p><strong>ID del caso:</strong> {{ casoId }}</p>
+
+  <button class="btn btn-success me-2" (click)="abrirSesion()">
+    Programar Sesión
+  </button>
+
+  <button class="btn btn-primary" (click)="abrirAcuerdo()">
+    Registrar Acuerdo
+  </button>
+
+  <hr>
+
+  <app-session-form
+    *ngIf="mostrarSesion"
+    [casoId]="casoId"
+    (onGuardado)="cerrarFormularios()">
+  </app-session-form>
+
+  <app-agreement-form
+    *ngIf="mostrarAcuerdo"
+    [casoId]="casoId"
+    (onGuardado)="cerrarFormularios()">
+  </app-agreement-form>
+</div>

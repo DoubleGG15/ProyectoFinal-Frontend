@@ -1,0 +1,46 @@
+
+<h1>Gestión de Casos</h1>
+
+<p style="color: red;" *ngIf="errorMessage">{{ errorMessage }}</p>
+<p style="color: lightgreen;" *ngIf="successMessage">{{ successMessage }}</p>
+
+<p>Total de casos: {{ casos.length }}</p>
+<p>Total de mediadores: {{ mediadores.length }}</p>
+
+<table border="1" *ngIf="casos.length > 0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Título</th>
+      <th>Descripción</th>
+      <th>Estado</th>
+      <th>Mediador actual</th>
+      <th>Asignar mediador</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let caso of casos">
+      <td>{{ caso.id }}</td>
+      <td>{{ caso.titulo }}</td>
+      <td>{{ caso.descripcion }}</td>
+      <td>{{ caso.estado }}</td>
+      <td>{{ caso.mediadorId || 'Sin asignar' }}</td>
+
+      <td>
+        <select [(ngModel)]="mediadorSeleccionado[caso.id]">
+          <option value="">Seleccione mediador</option>
+          <option *ngFor="let mediador of mediadores" [value]="mediador.Id">
+            {{ mediador.FullName }} - {{ mediador.Email }}
+          </option>
+        </select>
+
+        <button (click)="asignarMediador(caso.id)">
+          Asignar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="casos.length === 0">No hay casos registrados.</p>

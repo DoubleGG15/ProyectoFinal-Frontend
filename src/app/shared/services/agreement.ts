@@ -30,6 +30,7 @@ const MOCK_CASOS_MEDIADOR: ConflictCase[] = [
     description: 'Segundo caso registrado en Firestore.',
     address: 'Tegucigalpa',
     status: 'nuevo',
+    mediatorId: '8495a080-4ea0-4703-9ffb-64721d0b0efa',
     evidenceUrls: [],
   },
 ];
@@ -38,7 +39,6 @@ const MOCK_CASOS_MEDIADOR: ConflictCase[] = [
   providedIn: 'root',
 })
 export class AgreementService {
-  /** URL absoluta al backend .NET — nunca usar URLs relativas que Angular intercepte */
   private readonly apiBase = 'http://localhost:5235/api';
 
   constructor(
@@ -51,10 +51,6 @@ export class AgreementService {
     return new HttpHeaders({ Authorization: `Bearer ${token}` });
   }
 
-  /**
-   * GET /api/casos — lista los casos asignados al mediador.
-   * Mientras el endpoint no esté disponible, devuelve datos mock tipados.
-   */
   listarCasosAsignados(): Observable<ConflictCase[]> {
     return this.http
       .get<ConflictCase[]>(`${this.apiBase}/casos`, { headers: this.getHeaders() })
@@ -66,9 +62,8 @@ export class AgreementService {
       );
   }
 
-  /** POST /api/acuerdos — registra un acuerdo de mediación */
   registrarAcuerdo(acuerdoData: object): Observable<object> {
-    return this.http.post<object>(`${this.apiBase}/acuerdos`, acuerdoData, {
+    return this.http.post<object>(`${this.apiBase}/Sesiones/acuerdo`, acuerdoData, {
       headers: this.getHeaders(),
     });
   }

@@ -3,47 +3,75 @@
     <div class="dashboard-title-wrapper">
       <h1>Vecindario Tranquilo</h1>
     </div>
+
     <div class="user-badge">
       <div class="user-info">
         <p class="user-name">{{ userEmail }}</p>
         <p class="user-role">Administrador</p>
       </div>
-      <button class="btn-logout" (click)="onLogout()">Cerrar Sesión</button>
+
+      <button class="btn-logout" (click)="onLogout()">
+        Cerrar Sesión
+      </button>
     </div>
   </header>
 
   <main class="dashboard-main">
     <section class="welcome-section">
       <h2>Panel del Administrador</h2>
-      <p>Panel de supervisión global. Habilite o deshabilite usuarios, asigne zonas a mediadores y consulte estadísticas del sistema.</p>
-      @if (errorMessage) {
-        <p class="error-text" style="text-align: left; margin-top: 10px;">{{ errorMessage }}</p>
-      }
+      <p>
+        Panel de supervisión global. Habilite o deshabilite usuarios,
+        asigne zonas a mediadores y consulte estadísticas del sistema.
+      </p>
+
+      <p *ngIf="errorMessage" class="error-text">
+        {{ errorMessage }}
+      </p>
     </section>
 
     <div class="dashboard-grid" *ngIf="dashboard">
-      <!-- Card 1 -->
       <div class="card-stat">
         <p class="stat-label">Usuarios Registrados</p>
         <p class="stat-value">{{ dashboard.TotalUsuarios }}</p>
-        <p class="stat-desc">Cantidad total de ciudadanos y mediadores en la base de datos</p>
-        <a href="#" class="card-link">Administrar cuentas</a>
+        <p class="stat-desc">
+          Cantidad total de ciudadanos y mediadores en la base de datos
+        </p>
+        <button class="card-link" type="button" (click)="goTo('/admin/users')">
+  Administrar cuentas
+</button>
       </div>
 
-      <!-- Card 2 -->
       <div class="card-stat">
         <p class="stat-label">Conflictos Reportados</p>
         <p class="stat-value">{{ dashboard.TotalCasos }}</p>
-        <p class="stat-desc">Casos totales registrados por disputas de vecinos</p>
-        <a href="#" class="card-link">Monitorear casos</a>
+        <p class="stat-desc">
+          Casos totales registrados por disputas de vecinos
+        </p>
+        <button class="card-link" type="button" (click)="goTo('/admin/casos')">
+  Monitorear casos
+</button>
       </div>
 
-      <!-- Card 3 -->
       <div class="card-stat">
         <p class="stat-label">Mediadores Activos</p>
         <p class="stat-value">{{ dashboard.TotalMediadores || 3 }}</p>
-        <p class="stat-desc">Mediadores habilitados en zonas específicas</p>
-        <a href="#" class="card-link">Asignar zonas</a>
+        <p class="stat-desc">
+          Mediadores habilitados en zonas específicas
+        </p>
+       <button class="card-link" type="button" (click)="goTo('/admin/mediadores')">
+  Asignar zonas
+</button>
+      </div>
+
+      <div class="card-stat">
+        <p class="stat-label">Reportes</p>
+        <p class="stat-value">📊</p>
+        <p class="stat-desc">
+          Visualizar estadísticas del sistema
+        </p>
+       <button class="card-link" type="button" (click)="goTo('/admin/reportes')">
+  Ver reportes
+</button>
       </div>
     </div>
   </main>
