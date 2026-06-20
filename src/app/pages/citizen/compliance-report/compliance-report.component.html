@@ -1,52 +1,85 @@
-<div class="page-container">
-  <header class="page-header">
-    <button class="back-link" (click)="onGoBack()">← Volver al caso</button>
-    <h1 class="page-title">Reporte de Cumplimiento</h1>
-    <p class="page-subtitle">Indica si la contraparte cumplió cada punto del acuerdo</p>
-  </header>
+<div class="container">
+  <mat-card class="compliance-card">
 
-  @if (!submitted) {
-    <div class="agreement-summary">
-      <p class="agreement-text">{{ agreement.agreementText }}</p>
+    <div class="card-header">
+      <h2 class="card-title">
+        ⚖️ Reportar Cumplimiento de Acuerdo
+      </h2>
+      <div class="case-badge">
+        Caso ID: {{ caseId }}
+      </div>
     </div>
 
-    <form [formGroup]="complianceForm" (ngSubmit)="onSubmit()">
-      @for (point of agreement.points; track trackPoint($index, point)) {
-        <div class="point-card">
-          <div class="point-header">
-            <div class="point-number">{{ $index + 1 }}</div>
-            <div class="point-info">
-              <p class="point-description">{{ point.description }}</p>
-              <p class="point-deadline">📅 Plazo: <strong>{{ point.deadline }}</strong></p>
-            </div>
-          </div>
+    <mat-card-content>
+      <!-- Detalle del punto de acuerdo vencido (Mock) -->
+      <div class="agreement-point-detail">
+        <div class="point-label">📌 Punto del Acuerdo a Evaluar</div>
+        <p class="point-desc">{{ mockAgreementPoint.description }}</p>
+        <div class="point-deadline">
+          ⚠️ Plazo Límite Vencido: {{ mockAgreementPoint.deadline | date:'dd/MM/yyyy, h:mm a' }}
+        </div>
+      </div>
 
-          <mat-form-field appearance="outline" class="compliance-select">
-            <mat-label>Estado de cumplimiento</mat-label>
-            <mat-select [formControlName]="point.id">
-              @for (opt of complianceOptions; track opt.value) {
-                <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
-              }
+      <!-- Formulario Reactivo -->
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="compliance-form">
+
+        <!-- Selector de Estado de Cumplimiento -->
+        <div class="form-group">
+          <mat-form-field appearance="fill">
+            <mat-label>Estado de Cumplimiento</mat-label>
+            <mat-select formControlName="status" placeholder="Seleccione una opción">
+              <mat-option value="cumplido">✅ Cumplido (El acuerdo se realizó con éxito)</mat-option>
+              <mat-option value="incumplido">❌ Incumplido (No se respetó lo acordado)</mat-option>
             </mat-select>
+            <mat-error *ngIf="form.get('status')?.hasError('required')">
+              El estado de cumplimiento es obligatorio.
+            </mat-error>
           </mat-form-field>
         </div>
-      }
 
-      <div class="form-actions">
-        <button type="button" class="btn-secondary" (click)="onGoBack()">Cancelar</button>
-        <button type="submit" class="btn-primary" [disabled]="complianceForm.invalid">
-          Enviar Reporte
-        </button>
-      </div>
-    </form>
-  }
+        <!-- Comentarios con Evidencia -->
+        <div class="form-group">
+          <mat-form-field appearance="fill">
+            <mat-label>Evidencias y Comentarios</mat-label>
+            <textarea
+              matInput
+              formControlName="comments"
+              placeholder="Describa a detalle las razones, hechos u observaciones sobre este punto..."
+              rows="5">
+            </textarea>
+            <mat-hint align="end">
+              {{ form.get('comments')?.value?.length || 0 }} / Mínimo 15 caracteres
+            </mat-hint>
+            <mat-error *ngIf="form.get('comments')?.hasError('required')">
+              Los comentarios son obligatorios.
+            </mat-error>
+            <mat-error *ngIf="form.get('comments')?.hasError('minlength')">
+              Debe ingresar al menos 15 caracteres descriptivos.
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-  @if (submitted) {
-    <div class="success-state">
-      <div class="success-icon">✅</div>
-      <h2>Reporte Enviado</h2>
-      <p>El estado de cumplimiento ha sido registrado correctamente. El mediador será notificado.</p>
-      <a routerLink="/ciudadano/mis-casos" class="btn-primary">Volver a Mis Casos</a>
-    </div>
-  }
+        <!-- Botones de Navegación/Acción -->
+        <div class="button-group">
+          <button
+            type="button"
+            mat-stroked-button
+            class="btn-cancel"
+            routerLink="/ciudadano/mis-casos">
+            ↩️ Volver
+          </button>
+
+          <button
+            type="submit"
+            mat-flat-button
+            class="btn-submit"
+            [disabled]="form.invalid">
+            🛡️ Enviar Reporte Inmutable
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+
+  </mat-card>
 </div>
