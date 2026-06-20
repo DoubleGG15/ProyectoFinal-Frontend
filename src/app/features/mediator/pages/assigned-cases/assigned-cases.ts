@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AgreementService } from '../../../../shared/services/agreement';
@@ -20,13 +20,16 @@ const STATUS_CONFIG: Record<ConflictStatus, { label: string; color: string }> = 
   styleUrls: ['./assigned-cases.css'],
 })
 export class AssignedCasesComponent implements OnInit {
-  casos: ConflictCase[] = [];
+  casos: any[] = [];
   isLoading: boolean = true;
   errorMsg: string | null = null;
 
   readonly statusConfig = STATUS_CONFIG;
 
-  constructor(private agreementService: AgreementService) {}
+  constructor(
+    private agreementService: AgreementService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.cargarCasos();
@@ -34,19 +37,38 @@ export class AssignedCasesComponent implements OnInit {
 
   cargarCasos(): void {
     this.isLoading = true;
-    this.errorMsg  = null;
+    this.errorMsg = null;
 
     this.agreementService.listarCasosAsignados().subscribe({
-      next: (data: ConflictCase[]) => {
-        this.casos    = data;
+      next: (data: any) => {
+        console.log('CASOS MEDIADOR RAW:', data);
+
+        const lista = Array.isArray(data)
+          ? data
+          : data?.$values ?? data?.Values ?? [];
+
+        this.casos = lista;
+
+        console.log('CASOS MEDIADOR FINAL:', this.casos);
+
         this.isLoading = false;
+        this.cd.detectChanges();
       },
-      error: (err: Error) => {
+      error: (err: any) => {
         console.error('Error al cargar los casos del mediador:', err);
-        this.errorMsg  = 'No se pudieron cargar los casos. Se muestran datos locales.';
+        this.errorMsg = 'No se pudieron cargar los casos asignados.';
         this.isLoading = false;
+        this.cd.detectChanges();
       },
     });
+  }
+
+  getId(caso: any): string {
+    return caso.id || caso.Id || caso.casoId || caso.CasoId || '';
+  }
+
+  getStatus(caso: any): ConflictStatus {
+    return caso.status || caso.Status || caso.estado || caso.Estado || 'asignado';
   }
 
   getStatusLabel(status: ConflictStatus): string {

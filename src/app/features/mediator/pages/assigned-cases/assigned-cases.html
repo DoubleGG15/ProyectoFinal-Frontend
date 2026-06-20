@@ -26,31 +26,72 @@
 
   @if (!isLoading && casos.length > 0) {
     <div class="cases-list">
-      @for (caso of casos; track caso.id) {
+
+      @for (caso of casos; track getId(caso)) {
         <div class="case-row">
+
           <div class="case-main">
             <div class="case-header-row">
-              <span class="case-id">#{{ caso.id.slice(0, 8) }}</span>
-              <span class="status-badge" [style.background-color]="getStatusColor(caso.status)">
-                {{ getStatusLabel(caso.status) }}
+              <span class="case-id">
+                #{{ getId(caso).slice(0, 8) }}
+              </span>
+
+              <span
+                class="status-badge"
+                [style.background-color]="getStatusColor(getStatus(caso))">
+                {{ getStatusLabel(getStatus(caso)) }}
               </span>
             </div>
-            <h3 class="case-type">{{ caso.conflictType | titlecase }}</h3>
-            <p class="case-desc">{{ caso.description }}</p>
+
+            <h3 class="case-type">
+              {{
+                caso.conflictType ||
+                caso.ConflictType ||
+                caso.titulo ||
+                caso.Titulo ||
+                'Caso asignado'
+              }}
+            </h3>
+
+            <p class="case-desc">
+              {{
+                caso.description ||
+                caso.Description ||
+                caso.descripcion ||
+                caso.Descripcion ||
+                'Sin descripción'
+              }}
+            </p>
+
             <div class="case-meta">
-              <span>📍 {{ caso.address }}</span>
-              @if (caso.evidenceUrls.length > 0) {
-                <span>📎 {{ caso.evidenceUrls.length }} evidencia(s)</span>
+              <span>
+                📍
+                {{
+                  caso.address ||
+                  caso.Address ||
+                  caso.direccion ||
+                  caso.Direccion ||
+                  'Sin dirección'
+                }}
+              </span>
+
+              @if ((caso.evidenceUrls?.length || caso.EvidenceUrls?.length || 0) > 0) {
+                <span>
+                  📎 {{ caso.evidenceUrls?.length || caso.EvidenceUrls?.length }} evidencia(s)
+                </span>
               }
             </div>
           </div>
+
           <div class="case-actions">
-            <a [routerLink]="['/mediador/caso', caso.id]" class="btn-detail">
+            <a [routerLink]="['/mediador/caso', getId(caso)]" class="btn-detail">
               Ver Detalle →
             </a>
           </div>
+
         </div>
       }
+
     </div>
   }
 

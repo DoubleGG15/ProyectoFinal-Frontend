@@ -21,13 +21,26 @@
   <tbody>
     <tr *ngFor="let caso of casos">
       <td>{{ caso.id || caso.Id || caso.casoId || caso.CasoId }}</td>
-      <td>{{ caso.titulo || caso.Titulo || caso.title || caso.Title }}</td>
-      <td>{{ caso.descripcion || caso.Descripcion || caso.description || caso.Description }}</td>
-      <td>{{ caso.estado || caso.Estado || caso.status || caso.Status }}</td>
-      <td>{{ caso.mediadorId || caso.MediadorId || 'Sin asignar' }}</td>
 
       <td>
-        <select [(ngModel)]="mediadorSeleccionado[caso.id || caso.Id || caso.casoId || caso.CasoId]">
+        {{ caso.titulo || caso.Titulo || caso.title || caso.Title }}
+      </td>
+
+      <td>
+        {{ caso.descripcion || caso.Descripcion || caso.description || caso.Description }}
+      </td>
+
+      <td>
+        {{ caso.estado || caso.Estado || caso.status || caso.Status }}
+      </td>
+
+      <!-- ESTA ES LA LÍNEA IMPORTANTE -->
+      <td>{{ getNombreMediador(caso) }}</td>
+
+      <td>
+        <select
+          [(ngModel)]="mediadorSeleccionado[caso.id || caso.Id || caso.casoId || caso.CasoId]"
+        >
           <option value="">Seleccione mediador</option>
 
           <option
@@ -40,7 +53,9 @@
           </option>
         </select>
 
-        <button (click)="asignarMediador(caso.id || caso.Id || caso.casoId || caso.CasoId)">
+        <button
+          (click)="asignarMediador(caso.id || caso.Id || caso.casoId || caso.CasoId)"
+        >
           Asignar
         </button>
       </td>
@@ -48,4 +63,6 @@
   </tbody>
 </table>
 
-<p *ngIf="casos.length === 0">No hay casos registrados.</p>
+<p *ngIf="casos.length === 0">
+  No hay casos registrados.
+</p>

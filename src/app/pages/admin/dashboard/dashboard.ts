@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { forkJoin } from 'rxjs';
 
 import { AuthService } from '../../../services/auth.service';
 import { AdminService } from '../../../services/admin.service';
@@ -11,16 +10,17 @@ import { AdminService } from '../../../services/admin.service';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css',
+  styleUrl: './dashboard.css'
 })
 export class AdminDashboardComponent implements OnInit {
+
   userEmail: string = 'Administrador';
   errorMessage: string = '';
 
-  dashboard = {
+  dashboard: any = {
     TotalUsuarios: 0,
     TotalCasos: 0,
-    TotalMediadores: 0,
+    TotalMediadores: 0
   };
 
   constructor(
@@ -31,35 +31,46 @@ export class AdminDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userEmail = localStorage.getItem('email') || 'Administrador';
+
     this.cargarDashboard();
+
+    setTimeout(() => {
+      this.cargarDashboard();
+    }, 500);
   }
 
   cargarDashboard(): void {
-    forkJoin({
-      usuarios: this.adminService.listarUsuarios(),
-      casos: this.adminService.listarCasos(),
-      mediadores: this.adminService.listarMediadores()
-    }).subscribe({
-      next: (res: any) => {
-        const usuarios = Array.isArray(res.usuarios)
-          ? res.usuarios
-          : res.usuarios?.$values ?? res.usuarios?.Values ?? [];
-
-        const casos = Array.isArray(res.casos)
-          ? res.casos
-          : res.casos?.$values ?? res.casos?.Values ?? [];
-
-        const mediadores = Array.isArray(res.mediadores)
-          ? res.mediadores
-          : res.mediadores?.$values ?? res.mediadores?.Values ?? [];
+    this.adminService.obtenerDashboard().subscribe({
+      next: (data: any) => {
+        console.log('DASHBOARD:', data);
 
         this.dashboard = {
-          TotalUsuarios: usuarios.length,
-          TotalCasos: casos.length,
-          TotalMediadores: mediadores.length,
+          TotalUsuarios: data.TotalUsuarios ?? data.totalUsuarios ?? 0,
+          TotalCasos: data.TotalCasos ?? data.totalCasos ?? 0,
+          TotalMediadores: 0
         };
 
-        console.log('DASHBOARD FINAL:', this.dashboard);
+        this.adminService.listarMediadores().subscribe({
+          next: (mediadores: any) => {
+
+            const listaMediadores = Array.isArray(mediadores)
+              ? mediadores
+              : mediadores?.$values ?? mediadores?.Values ?? [];
+
+            console.log('MEDIADORES DASHBOARD:', listaMediadores);
+
+            this.dashboard.TotalMediadores = listaMediadores.length;
+
+            this.cd.detectChanges();
+          },
+          error: (err: any) => {
+            console.error('ERROR MEDIADORES:', err);
+            this.dashboard.TotalMediadores = 0;
+            this.cd.detectChanges();
+          }
+        });
+
         this.cd.detectChanges();
       },
       error: (err: any) => {
@@ -76,6 +87,6 @@ export class AdminDashboardComponent implements OnInit {
 
   onLogout(): void {
     this.authService.logout();
-    this.router.navigate(['/login'], { replaceUrl: true });
+    this.router.navigate(['/login']);
   }
 }

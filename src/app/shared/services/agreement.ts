@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, map } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { ConflictCase } from '../../models/api.models';
@@ -52,15 +52,34 @@ export class AgreementService {
   }
 
   listarCasosAsignados(): Observable<ConflictCase[]> {
-    return this.http
-      .get<ConflictCase[]>(`${this.apiBase}/casos`, { headers: this.getHeaders() })
-      .pipe(
-        catchError((err) => {
-          console.warn('Backend no disponible, usando datos mock:', err.message);
-          return of(MOCK_CASOS_MEDIADOR);
-        }),
-      );
-  }
+  return this.http
+    .get<any[]>(`${this.apiBase}/casos`, { headers: this.getHeaders() })
+    .pipe(
+      map((data: any) => {
+        const casos = Array.isArray(data)
+          ? data
+          : data?.$values ?? data?.Values ?? [];
+
+        return casos.map((c: any) => ({
+          id: c.id || c.Id || c.casoId || c.CasoId,
+          reporterId: c.ciudadanoId || c.CiudadanoId || '',
+          reporterName: c.ciudadanoNombre || c.CiudadanoNombre || 'Ciudadano',
+          respondentId: '',
+          respondentName: 'Contraparte',
+          conflictType: c.conflictType || c.ConflictType || c.titulo || c.Titulo || 'Caso asignado',
+          description: c.description || c.Description || c.descripcion || c.Descripcion || 'Sin descripción',
+          address: c.address || c.Address || c.direccion || c.Direccion || 'Sin dirección',
+          status: c.status || c.Status || c.estado || c.Estado || 'asignado',
+          mediatorId: c.mediadorId || c.MediadorId || '',
+          evidenceUrls: c.evidenceUrls || c.EvidenceUrls || [],
+        }));
+      }),
+      catchError((err) => {
+        console.warn('Backend no disponible, usando datos mock:', err.message);
+        return of(MOCK_CASOS_MEDIADOR);
+      }),
+    );
+}
 
   registrarAcuerdo(acuerdoData: object): Observable<object> {
     return this.http.post<object>(`${this.apiBase}/Sesiones/acuerdo`, acuerdoData, {
