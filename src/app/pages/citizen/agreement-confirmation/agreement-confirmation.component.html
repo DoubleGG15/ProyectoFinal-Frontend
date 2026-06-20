@@ -1,77 +1,84 @@
-<div class="page-container">
-  <header class="page-header">
-    <button class="back-link" (click)="onGoBack()">← Volver al caso</button>
-    <h1 class="page-title">Confirmar Acuerdo de Mediación</h1>
-    <p class="page-subtitle">Caso #{{ caseId }}</p>
-  </header>
+<div class="agreement-container">
+  @if (agreement) {
+    <mat-card class="agreement-card">
+      <mat-card-header>
+        <mat-card-title class="agreement-title">
+          🤝 Confirmación de Convenio de Mediación
+        </mat-card-title>
+        <mat-card-subtitle class="agreement-subtitle">
+          Expediente Asociado ID: {{ agreement.caseId }}
+        </mat-card-subtitle>
+      </mat-card-header>
 
-  <!-- Badge de Inmutabilidad -->
-  @if (isImmutable) {
-    <div class="immutable-banner">
-      🔒 Este acuerdo está <strong>formalizado e inmutable</strong>. No puede ser modificado.
-      @if (agreement.formalizedAt) {
-        <span class="formalized-date">Formalizado el {{ agreement.formalizedAt | date:'longDate' }}</span>
-      }
-    </div>
-  }
+      <mat-divider></mat-divider>
 
-  <!-- Estado de confirmaciones -->
-  <div class="confirmation-status">
-    <div class="confirm-chip" [class.done]="agreement.confirmedByReporter">
-      {{ agreement.confirmedByReporter ? '✅' : '⏳' }} Denunciante confirmó
-    </div>
-    <div class="confirm-chip" [class.done]="agreement.confirmedByRespondent">
-      {{ agreement.confirmedByRespondent ? '✅' : '⏳' }} Contraparte confirmó
-    </div>
-  </div>
+      <mat-card-content class="agreement-content">
+        <h3>📜 Declaración de Acuerdo Formal</h3>
+        <p class="agreement-text">{{ agreement.agreementText }}</p>
 
-  <!-- Texto del Acuerdo -->
-  <div class="agreement-card">
-    <h2 class="section-title">📜 Texto del Acuerdo</h2>
-    <p class="agreement-text">{{ agreement.agreementText }}</p>
+        <mat-divider></mat-divider>
 
-    <mat-divider class="divider"></mat-divider>
-
-    <h3 class="points-title">Puntos del Acuerdo</h3>
-    @for (point of agreement.points; track trackPoint($index, point)) {
-      <div class="point-item">
-        <div class="point-number">{{ $index + 1 }}</div>
-        <div class="point-body">
-          <p class="point-description">{{ point.description }}</p>
-          <p class="point-deadline">📅 Plazo: <strong>{{ point.deadline }}</strong></p>
+        <h3>📋 Puntos Clave del Convenio</h3>
+        <div class="points-list">
+          @for (point of agreement.points; track point.id) {
+            <div class="point-item">
+              <div class="point-header">
+                <span class="point-badge">Cláusula {{ point.id }}</span>
+                <span class="point-deadline">📅 Plazo Límite: {{ point.deadline }}</span>
+                <span class="point-status" [ngClass]="point.complianceStatus">
+                  @if (point.complianceStatus === 'pendiente') { ⏳ Pendiente }
+                  @else if (point.complianceStatus === 'cumplido') { ✅ Cumplido }
+                  @else { ❌ Incumplido }
+                </span>
+              </div>
+              <p class="point-description">{{ point.description }}</p>
+            </div>
+          }
         </div>
-      </div>
-    }
-  </div>
 
-  <!-- Acción de Confirmación -->
-  @if (!isImmutable) {
-    <div class="action-panel">
-      @if (alreadyConfirmed) {
-        <div class="already-confirmed">
-          ✅ Ya confirmaste este acuerdo. Esperando a la otra parte.
+        <mat-divider></mat-divider>
+
+        <div class="status-summary">
+          <h3>✍️ Firmas de Validación</h3>
+          <p>
+            <span>Contraparte (Denunciado):</span>
+            @if (agreement.confirmedByRespondent) {
+              <span class="status-signed">✅ Firmado y Aceptado</span>
+            } @else {
+              <span class="status-pending">⏳ Pendiente de Firma</span>
+            }
+          </p>
+          <p>
+            <span>Ciudadano (Denunciante):</span>
+            @if (agreement.confirmedByReporter) {
+              <span class="status-signed">✅ Firmado y Aceptado</span>
+            } @else {
+              <span class="status-pending">⏳ Pendiente de Firma</span>
+            }
+          </p>
         </div>
-      }
-      @if (!alreadyConfirmed) {
-        <p class="action-warning">
-          ⚠️ Al confirmar, aceptas los términos de este acuerdo. Esta acción no se puede deshacer.
-        </p>
-        <button class="btn-confirm" (click)="onConfirm()">
-          ✅ Confirmar y Aceptar Acuerdo
-        </button>
-      }
-    </div>
-  }
 
-  @if (confirmed && !isImmutable) {
-    <div class="success-banner">
-      🎉 ¡Tu confirmación fue registrada! El acuerdo se formalizará cuando la otra parte también confirme.
-    </div>
-  }
+        @if (agreement.isImmutable) {
+          <div class="immutable-banner">
+            🔒 Este acuerdo ha sido formalizado por ambas partes y es inmutable. El expediente digital ha sido cerrado de forma transparente.
+          </div>
+        }
+      </mat-card-content>
 
-  @if (confirmed && isImmutable) {
-    <div class="success-banner immutable-success">
-      🔒 ¡Acuerdo FORMALIZADO! Ambas partes han confirmado. El expediente queda cerrado.
+      @if (!agreement.isImmutable) {
+        <mat-card-actions class="agreement-actions">
+          <button mat-flat-button class="btn-confirm" (click)="confirmAgreement()">
+            🤝 Confirmar y Aceptar Convenio
+          </button>
+          <button mat-stroked-button class="btn-reject" (click)="rejectAgreement()">
+            ❌ Solicitar Cambios / Rechazar
+          </button>
+        </mat-card-actions>
+      }
+    </mat-card>
+  } @else {
+    <div class="loading-container">
+      <p>⏳ Cargando los datos del acuerdo, por favor espera...</p>
     </div>
   }
 </div>
