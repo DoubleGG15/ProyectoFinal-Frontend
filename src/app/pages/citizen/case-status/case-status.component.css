@@ -1,242 +1,209 @@
 .page-container {
-  max-width: 950px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 32px 20px;
   min-height: 100vh;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e8eaf6 100%);
 }
 
-/* Cabecera del Caso con el color verde principal (#2D4C3F) */
-.custom-header {
-  background-color: #2D4C3F;
-  color: white;
-  padding: 24px;
-  border-radius: 12px;
-  margin-bottom: 24px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
+.page-header { margin-bottom: 28px; }
 
 .back-link {
-  color: #F2C14E; /* Color Oro */
+  color: #5c6bc0;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 12px;
-  transition: color 0.2s ease;
+  display: inline-block;
+  margin-bottom: 10px;
 }
 
-.back-link:hover {
-  color: #ffd875;
-}
+.back-link:hover { color: #3949ab; }
 
 .page-title {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
+  color: #1e293b;
   margin: 0;
 }
 
-/* Personalización del Stepper para que sea Read-Only */
-.custom-stepper-card {
-  border-radius: 12px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+.section-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 18px;
+}
+
+/* Progress Stepper */
+.progress-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
   margin-bottom: 24px;
 }
 
-.custom-stepper {
-  background: transparent;
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
 }
 
-::ng-deep .mat-horizontal-stepper-header-container {
-  pointer-events: none !important; /* Desactiva interacción de clics */
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 80px;
+  opacity: 0.4;
+  transition: opacity 0.3s;
 }
 
-/* Hectáreas de color dentro del Stepper Material */
-::ng-deep .mat-step-header .mat-step-icon-state-edit,
-::ng-deep .mat-step-header .mat-step-icon-state-done,
-::ng-deep .mat-step-header .mat-step-icon-selected {
-  background-color: #2D4C3F !important;
-  color: #F2C14E !important;
+.step-item.active { opacity: 1; }
+
+.step-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background 0.3s, color 0.3s;
 }
 
-/* Rejilla de Información */
+.step-item.active .step-dot {
+  background: #5c6bc0;
+  color: white;
+}
+
+.step-dot.current {
+  background: #3949ab;
+  box-shadow: 0 0 0 4px rgba(92, 107, 192, 0.25);
+}
+
+.step-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.step-connector {
+  flex: 1;
+  height: 3px;
+  background: #e2e8f0;
+  margin-bottom: 22px;
+  transition: background 0.3s;
+}
+
+.step-connector.active { background: #5c6bc0; }
+
+/* Info Grid */
 .info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 24px;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
-@media (max-width: 768px) {
-  .info-grid {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 640px) {
+  .info-grid { grid-template-columns: 1fr; }
 }
 
-/* Tarjetas Generales de Material */
-.custom-card {
-  border-left: 5px solid #2D4C3F;
-  border-radius: 10px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+.info-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
 }
 
-.custom-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
-}
-
-/* Tarjeta de Sesión con Acento Oro (#F2C14E) */
-.session-card {
-  border-left: 5px solid #F2C14E;
-}
-
-.card-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #2D4C3F;
+.info-row {
   display: flex;
-  align-items: center;
   gap: 8px;
-  margin-bottom: 16px !important;
-}
-
-.info-item {
-  margin-bottom: 12px;
-  font-size: 15px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  align-items: flex-start;
 }
 
 .info-label {
   font-weight: 600;
-  color: #4a5568;
-  display: inline-block;
-  width: 110px;
+  color: #475569;
+  min-width: 90px;
+  flex-shrink: 0;
 }
 
-.info-value {
-  color: #2d3748;
-}
-
-.font-highlight {
-  font-weight: 600;
-  color: #2D4C3F;
-}
-
-.description-block {
-  margin-top: 14px;
-}
-
-.description-text {
-  background-color: #f7fafc;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #edf2f7;
-  margin: 6px 0 0 0;
-  font-style: italic;
-  color: #4a5568;
-}
-
-/* Evidencias */
-.evidence-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
+.info-value { color: #1e293b; }
 
 .evidence-chip {
-  background-color: #f0fdf4;
-  border: 1px solid #c6f6d5;
-  color: #22543d;
-  padding: 4px 10px;
-  border-radius: 16px;
+  display: inline-block;
+  font-size: 12px;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin: 2px 4px 2px 0;
+}
+
+/* Session */
+.session-detail { font-size: 14px; color: #1e293b; }
+.session-detail p { margin: 6px 0; }
+
+.btn-meeting {
+  display: inline-block;
+  margin-top: 10px;
+  background: #10b981;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
   font-size: 13px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
 }
 
-.evidence-chip mat-icon {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
-}
+.no-session { color: #94a3b8; font-size: 14px; }
 
-/* Sesión de mediación */
-.session-status-badge {
-  background-color: #fef3c7;
-  color: #d97706;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-left: auto;
-}
-
-.session-action {
-  margin-top: 20px;
-}
-
-.no-session-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 32px;
-  text-align: center;
-  color: #718096;
-}
-
-.no-session-icon {
-  font-size: 40px;
-  width: 40px;
-  height: 40px;
-  color: #cbd5e0;
-  margin-bottom: 8px;
-}
-
-/* Botones y Acciones */
-.actions-card {
-  background-color: #f7fafc !important;
-  border: 1px solid #edf2f7;
-  border-radius: 12px !important;
+/* Action Panel */
+.action-panel {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
 }
 
 .action-buttons {
   display: flex;
+  gap: 12px;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 8px;
 }
 
-/* Botón de acento Oro */
-.btn-gold {
-  background-color: #F2C14E !important;
-  color: #2D4C3F !important;
-  font-weight: 600 !important;
-  transition: background-color 0.2s ease !important;
-}
-
-.btn-gold:hover {
-  background-color: #ffd875 !important;
-}
-
-/* Botón de color Verde Principal */
 .btn-primary {
-  background-color: #2D4C3F !important;
-  color: white !important;
-  font-weight: 600 !important;
-  transition: background-color 0.2s ease !important;
+  display: inline-block;
+  background: linear-gradient(135deg, #5c6bc0, #3949ab);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: opacity 0.2s;
 }
 
-.btn-primary:hover {
-  background-color: #1e332a !important;
+.btn-primary:hover { opacity: 0.9; }
+
+.btn-secondary {
+  display: inline-block;
+  background: #d1fae5;
+  color: #059669;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.2s;
 }
 
-/* Ocultar el panel de contenido interno de mat-stepper */
-::ng-deep .mat-horizontal-stepper-content {
-  display: none !important;
-}
+.btn-secondary:hover { background: #a7f3d0; }
