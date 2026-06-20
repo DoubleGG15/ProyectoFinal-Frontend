@@ -11,6 +11,7 @@ import { AdminService } from '../../../services/admin.service';
   styleUrl: './cases.css'
 })
 export class AdminCasesComponent implements OnInit {
+
   casos: any[] = [];
   mediadores: any[] = [];
 
@@ -28,13 +29,16 @@ export class AdminCasesComponent implements OnInit {
   }
 
   cargarDatos(): void {
+
     this.adminService.listarCasos().subscribe({
       next: (data: any) => {
+
         this.casos = Array.isArray(data)
           ? data
           : data.$values ?? data.Values ?? [];
 
         console.log('CASOS:', this.casos);
+
         this.cd.detectChanges();
       },
       error: (err: any) => {
@@ -46,11 +50,13 @@ export class AdminCasesComponent implements OnInit {
 
     this.adminService.listarMediadores().subscribe({
       next: (data: any) => {
+
         this.mediadores = Array.isArray(data)
           ? data
           : data.$values ?? data.Values ?? [];
 
         console.log('MEDIADORES:', this.mediadores);
+
         this.cd.detectChanges();
       },
       error: (err: any) => {
@@ -62,10 +68,44 @@ export class AdminCasesComponent implements OnInit {
   }
 
   getId(item: any): string {
-    return item.id || item.Id || item.casoId || item.CasoId || item.userId || item.UserId || '';
+    return item.id ||
+           item.Id ||
+           item.casoId ||
+           item.CasoId ||
+           item.userId ||
+           item.UserId ||
+           '';
+  }
+
+  getMediadorIdCaso(caso: any): string {
+    return caso.mediadorId ||
+           caso.MediadorId ||
+           caso.mediadorAsignadoId ||
+           caso.MediadorAsignadoId ||
+           '';
+  }
+
+  getNombreMediador(caso: any): string {
+
+    const mediadorId = this.getMediadorIdCaso(caso);
+
+    if (!mediadorId) {
+      return 'Sin asignar';
+    }
+
+    const mediador = this.mediadores.find(m =>
+      (m.id || m.Id || m.userId || m.UserId) === mediadorId
+    );
+
+    if (!mediador) {
+      return mediadorId;
+    }
+
+    return `${mediador.fullName || mediador.FullName || mediador.nombre || mediador.Nombre} - ${mediador.email || mediador.Email}`;
   }
 
   asignarMediador(casoId: string): void {
+
     const mediadorId = this.mediadorSeleccionado[casoId];
 
     if (!mediadorId) {
@@ -76,17 +116,28 @@ export class AdminCasesComponent implements OnInit {
 
     this.adminService.asignarMediadorCaso(casoId, mediadorId).subscribe({
       next: () => {
+
         this.successMessage = 'Mediador asignado correctamente';
         this.errorMessage = '';
 
-        setTimeout(() => {
-          this.cargarDatos();
-          this.cd.detectChanges();
-        }, 300);
+        const caso = this.casos.find(c =>
+          (c.id || c.Id || c.casoId || c.CasoId) === casoId
+        );
+
+        if (caso) {
+          caso.mediadorId = mediadorId;
+          caso.MediadorId = mediadorId;
+          caso.estado = 'Asignado';
+          caso.Estado = 'Asignado';
+        }
+
+        this.cd.detectChanges();
       },
       error: (err: any) => {
         console.error('ERROR ASIGNAR:', err);
-        this.errorMessage = err.error?.message || 'Error al asignar mediador';
+        this.errorMessage =
+          err.error?.message || 'Error al asignar mediador';
+
         this.successMessage = '';
         this.cd.detectChanges();
       }
